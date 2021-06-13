@@ -20,7 +20,10 @@ def create_app():
 
     @app.route("/health")
     def health():
-        health = {"api": "ok"}
+        health = {
+            "api": "ok",
+            "mongo": get_db().db.command("ping"),
+        }
         return jsonify(health), 200
 
     return app
