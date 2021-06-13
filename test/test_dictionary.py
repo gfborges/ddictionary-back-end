@@ -1,5 +1,4 @@
 from test.pymongomock import PyMongoMock
-from flask_pymongo import PyMongo
 
 
 def test_health_check(client, mongo):

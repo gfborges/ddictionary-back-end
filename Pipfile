@@ -8,7 +8,6 @@ test="pytest"
 
 [packages]
 appdirs = "==1.4.4"
-black = "==21.5b2"
 click = "==8.0.1"
 Flask = "==2.0.1"
 Flask-Injector = "==0.12.3"
@@ -31,6 +30,7 @@ Werkzeug = "==2.0.1"
 [dev-packages]
 pytest = "*"
 mongomock = "*"
+black = "==21.5b2"
 
 [requires]
 python_version = "3.9"
