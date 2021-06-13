@@ -31,6 +31,7 @@ Werkzeug = "==2.0.1"
 pytest = "*"
 mongomock = "*"
 black = "==21.5b2"
+pytest-mongodb = "*"
 
 [requires]
 python_version = "3.9"

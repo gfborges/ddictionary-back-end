@@ -15,9 +15,13 @@ def mongo():
 
 @pytest.fixture
 def app(mongo) -> Flask:
-    yield create_app()
+    app = create_app()
+    with app.app_context():
+        client = mongodb.get_db()
+        PyMongoMock.test_data(client)
+        yield app
 
 
 @pytest.fixture
 def client(app: FlaskClient):
-    return app.test_client()
+    yield app.test_client()

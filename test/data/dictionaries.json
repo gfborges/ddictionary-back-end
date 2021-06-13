@@ -1,0 +1,39 @@
+[
+  {
+    "title":"cat",
+    "group":"feline",
+    "domain":"pets",
+    "definitions":[
+      "crazy animal",
+      "cute pet"
+    ],
+    "translations":[
+      "gato",
+      "catze"
+    ]
+  },
+  {
+    "title":"cockatoo",
+    "group":"bird",
+    "domain":"pets",
+    "definitions":[
+      "weird pet",
+      "smart animal"
+    ],
+    "translations":[
+      "cacatua"
+    ]
+  },
+  {
+    "title":"experience",
+    "group":"entity",
+    "domain":"cx",
+    "definitions":[
+      "event of contact between company and customer",
+      "how the product is presented and delivered to the customer"
+    ],
+    "translations":[
+      "experiencia"
+    ]
+  }
+]
