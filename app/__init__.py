@@ -3,9 +3,9 @@ from app.database.mongo import get_db, get_mongo_uri
 
 
 def register_blueprints(app: Flask):
-    from app.dictionary.router import bp as dictionary
+    from app.entry.router import bp as entry_bp
 
-    app.register_blueprint(dictionary)
+    app.register_blueprint(entry_bp)
 
 
 def init_db(app: Flask):
