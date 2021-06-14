@@ -33,9 +33,5 @@ def get_one(query: EntryQuery):
 @bp.delete("")
 @validate()
 def delete(query: EntryQuery):
-    entry_service.delete(
-        domain=query.domain,
-        group=query.group,
-        title=query.title,
-    )
+    entry_service.delete(**query.dict())
     return jsonify({}), 202
