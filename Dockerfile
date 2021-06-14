@@ -4,14 +4,20 @@ RUN apk update && apk upgrade
 
 RUN apk add py3-pip python3-dev gcc linux-headers musl-dev bash
 
-COPY ./requirements.txt /app/requirements.txt
+RUN pip3 install pipenv
 
-WORKDIR /app
+COPY ./Pipfile ./Pipfile
 
-RUN pip install -r requirements.txt
+COPY ./Pipfile.lock /ddict/Pipfile.lock
+
+RUN python -m pipenv install --deploy --ignore-pipfile
+
+WORKDIR /ddict
+
+COPY ./app ./app
+
+COPY ./wsgi.py .
 
 EXPOSE 8000
 
-COPY . .
-
-CMD [ "gunicorn", "-b", "0.0.0.0:8000", "wsgi:app" ]
+CMD [ "pipenv","run","start" ]

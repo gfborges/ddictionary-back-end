@@ -8,6 +8,8 @@ services:
         environment:
             APP_ENV: "prod"
             APP_DEBUG: "False"
+            MONGODB_HOST: "mongodb"
+            MONGODB_DB: "ddictDB"
         networks:
             - backend 
     mongodb:
