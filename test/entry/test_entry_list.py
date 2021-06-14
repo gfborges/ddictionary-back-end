@@ -17,7 +17,8 @@ pets = [
 
 
 def test_list_all_entries(client):
-    res = client.get("/entries/pets")
+    query = dict(domain="pets")
+    res = client.get("/entries/all", query_string=query)
     data = res.json
     assert res.status_code == 200
     assert len(data) == 2

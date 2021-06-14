@@ -10,8 +10,7 @@ def get_one(domain: str, group: str, title: str) -> dict:
     return EntryReposiory.get_one(domain=domain, group=group, title=title)
 
 
-def save(domain: str, entry: EntryCreation) -> list[dict]:
-    entry["domain"] = domain
+def save(entry: EntryCreation) -> list[dict]:
     EntryReposiory.save(entry)
 
 
