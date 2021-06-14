@@ -1,8 +1,8 @@
+from flask import Blueprint, jsonify
+from flask_pydantic import validate
 from app.entry.errors import register_error_handlers, BadRequest
 from app.entry.models import DomainQuery, EntryCreation, EntryQuery
-from flask import Blueprint, jsonify
 import app.entry.service as entry_service
-from flask_pydantic import validate
 
 bp = Blueprint("entry", __name__, url_prefix="/entries")
 register_error_handlers(bp)
