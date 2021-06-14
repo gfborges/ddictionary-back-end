@@ -1,5 +1,9 @@
 def test_delete_entry(client):
-    query = {"domain": "pets", "group": "feline", "title": "cat"}
+    query = dict(
+        domain="pets",
+        group="feline",
+        title="cat",
+    )
     res = client.delete("/entries", query_string=query)
     assert res.status_code == 202
     assert res.json == {}
