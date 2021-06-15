@@ -1,5 +1,7 @@
+from app.entry.entry import Entry
 from app.entry.models import EntryCreation
 from app.database.mongo import get_db
+from pydantic import parse_obj_as
 
 
 class EntryReposiory:
@@ -15,15 +17,15 @@ class EntryReposiory:
         return list(cursor)
 
     @classmethod
-    def get_one(self, domain: str, group: str, title: str) -> list[dict]:
-        return self.mongo.db.entries.find_one(
+    def get_one(self, domain: str, group: str, title: str) -> Entry:
+        entry = self.mongo.db.entries.find_one(
             filter={
                 "domain": domain,
                 "group": group,
                 "title": title,
-            },
-            projection={"_id": False},
+            }
         )
+        return Entry.new_entry(entry)
 
     @classmethod
     def save(self, entry: EntryCreation) -> None:
@@ -31,7 +33,7 @@ class EntryReposiory:
         return self.mongo.db.entries.insert_one(entry)
 
     @classmethod
-    def delete(self, domain: str, group: str, title: str) -> list[dict]:
+    def delete(self, domain: str, group: str, title: str) -> None:
         return self.mongo.db.entries.delete_one(
             filter={
                 "domain": domain,

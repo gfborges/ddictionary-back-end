@@ -1,3 +1,4 @@
+from app.entry.entry import Entry
 from app.entry.models import EntryCreation
 from app.entry.repository import EntryReposiory
 
@@ -10,7 +11,7 @@ def get_one(domain: str, group: str, title: str) -> dict:
     return EntryReposiory.get_one(domain=domain, group=group, title=title)
 
 
-def save(entry: EntryCreation) -> list[dict]:
+def save(entry: EntryCreation) -> Entry:
     EntryReposiory.save(entry)
 
 

@@ -27,6 +27,7 @@ regex = "==2021.4.4"
 toml = "==0.10.2"
 typing-extensions = "==3.10.0.0"
 Werkzeug = "==2.0.1"
+pytz = "*"
 
 [dev-packages]
 pytest = "*"

@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify
 from flask_pydantic import validate
-from app.entry.errors import register_error_handlers, BadRequest
+from werkzeug.exceptions import NotFound
+from app.entry.errors import register_error_handlers
 from app.entry.models import DomainQuery, EntryCreation, EntryQuery
 import app.entry.service as entry_service
 
@@ -26,8 +27,9 @@ def create(body: EntryCreation):
 @validate()
 def get_one(query: EntryQuery):
     if entry := entry_service.get_one(**query.dict()):
-        return jsonify(entry)
-    raise BadRequest("Entry Not Found")
+        print(entry.json())
+        return jsonify(entry.json())
+    raise NotFound("Entry Not Found")
 
 
 @bp.delete("")

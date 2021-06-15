@@ -2,6 +2,7 @@ dog = dict(
     title="The-DOG",
     group="canidae",
     domain="pets",
+    definitions=["fun pet", "energetic animal"],
 )
 
 
@@ -13,6 +14,17 @@ def test_create_entry(client):
     data = res.json
     assert data.get("title") == dog["title"]
     assert data.get("group") == dog["group"]
+    assert data.get("definitions") == dog["definitions"]
+
+
+def test_create_entry_with_translation(client):
+    json = dog | {"translations": ["cachorro", "hund"]}
+    res = client.post("/entries", json=json)
+    assert res.status_code == 201, "POST /entries returned wrong status_code"
+    res = client.get("/entries", query_string=dog)
+    assert res.status_code == 200
+    data = res.json
+    assert data.get("translations") == json["translations"]
 
 
 def test_fail_validation_title(client, bad_entry):

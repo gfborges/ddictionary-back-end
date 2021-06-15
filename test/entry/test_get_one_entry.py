@@ -12,6 +12,7 @@ def test_get_one_entry(client):
     assert data.get("domain") == "pets"
     assert len(data.get("definitions")) == 2
     assert len(data.get("translations")) == 1
+    assert data.get("createdAt") == "1970-01-01T12:30:59"
 
 
 def test_get_non_existant_entry(client):

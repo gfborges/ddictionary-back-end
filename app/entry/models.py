@@ -1,4 +1,6 @@
+from typing import Optional
 from pydantic import BaseModel, Field
+from typing import Optional
 
 
 class DomainQuery(BaseModel):
@@ -11,4 +13,5 @@ class EntryQuery(DomainQuery):
 
 
 class EntryCreation(EntryQuery):
-    pass
+    definitions: list[str] = Field(min_length=1)
+    translations: Optional[list[str]] = Field(min_length=1)
