@@ -40,12 +40,22 @@ class Entry:
             createdAt=self.createdAt,
         )
 
-    def json(self):
+    def to_json(self):
         return dict(
+            id=str(self.id),
             domain=self.domain,
             title=self.title,
             group=self.group,
             definitions=self.definitions,
             translations=self.translations,
             createdAt=self.createdAt.isoformat(),
+        )
+
+    def to_simple_json(self):
+        return dict(
+            id=str(self.id),
+            domain=self.domain,
+            title=self.title,
+            group=self.group,
+            definitions=self.definitions[:1],
         )

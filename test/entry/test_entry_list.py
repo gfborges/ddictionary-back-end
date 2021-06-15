@@ -1,17 +1,17 @@
 pets = [
     {
+        "id": "60c809cbec2fc163dbda3666",
         "title": "cat",
         "group": "feline",
         "domain": "pets",
-        "definitions": ["crazy animal", "cute pet"],
-        "translations": ["gato", "catze"],
+        "definitions": ["crazy animal"],
     },
     {
+        "id": "af24d828d3622d8660c80a01",
         "title": "cockatoo",
         "group": "bird",
         "domain": "pets",
-        "definitions": ["weird pet", "smart animal"],
-        "translations": ["cacatua"],
+        "definitions": ["weird pet"],
     },
 ]
 

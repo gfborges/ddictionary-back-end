@@ -11,8 +11,13 @@ def get_one(domain: str, group: str, title: str) -> dict:
     return EntryReposiory.get_one(domain=domain, group=group, title=title)
 
 
+def get(id: str) -> dict:
+    return EntryReposiory.get(id=id)
+
+
 def save(entry: EntryCreation) -> Entry:
-    EntryReposiory.save(entry)
+    result = EntryReposiory.save(entry)
+    return result.inserted_id
 
 
 def delete(domain: str, group: str, title: str) -> dict:

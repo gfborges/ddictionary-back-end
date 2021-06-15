@@ -4,7 +4,7 @@ def test_get_one_entry(client):
         group="bird",
         title="cockatoo",
     )
-    res = client.get("/entries", query_string=query)
+    res = client.get("/entries/one", query_string=query)
     data = res.json
     assert res.status_code == 200
     assert data.get("title") == "cockatoo"
@@ -21,7 +21,15 @@ def test_get_non_existant_entry(client):
         group="myth",
         title="yeti",
     )
-    res = client.get("/entries", query_string=query)
+    res = client.get("/entries/one", query_string=query)
     data = res.json
     assert res.status_code == 404
     assert "Entry Not Found" in data.get("message")
+
+
+def test_get_by_id(client, mongo):
+    _id = "80a16c08752a59e40696660c"
+    res = client.get("/entries/" + _id)
+    data = res.json
+    assert res.status_code == 200
+    assert data.get("id") == _id

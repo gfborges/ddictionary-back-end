@@ -6,10 +6,13 @@ dog = dict(
 )
 
 
-def test_create_entry(client):
-    res = client.post("/entries", json=dog)
-    assert res.status_code == 201, "POST /entriesreturned wrong status_code"
-    res = client.get("/entries", query_string=dog)
+def test_create_entry(client, mongo):
+    created = client.post("/entries", json=dog)
+    assert (
+        created.status_code == 201
+    ), "POST /entries returned wrong status_code"
+    _id = created.json.get("id")
+    res = client.get("/entries/" + _id)
     assert res.status_code == 200
     data = res.json
     assert data.get("title") == dog["title"]
@@ -21,7 +24,7 @@ def test_create_entry_with_translation(client):
     json = dog | {"translations": ["cachorro", "hund"]}
     res = client.post("/entries", json=json)
     assert res.status_code == 201, "POST /entries returned wrong status_code"
-    res = client.get("/entries", query_string=dog)
+    res = client.get("/entries/one", query_string=dog)
     assert res.status_code == 200
     data = res.json
     assert data.get("translations") == json["translations"]

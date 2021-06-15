@@ -1,7 +1,7 @@
+from bson.objectid import ObjectId
 from app.entry.entry import Entry
 from app.entry.models import EntryCreation
 from app.database.mongo import get_db
-from pydantic import parse_obj_as
 
 
 class EntryReposiory:
@@ -9,12 +9,8 @@ class EntryReposiory:
 
     @classmethod
     def get_all(self, domain: str) -> list[dict]:
-        print("get_all", id(self.mongo), self.mongo.is_test())
-        cursor = self.mongo.db.entries.find(
-            filter={"domain": domain},
-            projection={"_id": False},
-        )
-        return list(cursor)
+        cursor = self.mongo.db.entries.find(filter={"domain": domain})
+        return [Entry.new_entry(entry) for entry in cursor]
 
     @classmethod
     def get_one(self, domain: str, group: str, title: str) -> Entry:
@@ -28,9 +24,17 @@ class EntryReposiory:
         return Entry.new_entry(entry)
 
     @classmethod
+    def get(self, id: str) -> Entry:
+        entry = self.mongo.db.entries.find_one(
+            filter={
+                "_id": ObjectId(id),
+            }
+        )
+        return Entry.new_entry(entry)
+
+    @classmethod
     def save(self, entry: EntryCreation) -> None:
-        print("get_all", id(self.mongo), self.mongo.is_test())
-        return self.mongo.db.entries.insert_one(entry)
+        return self.mongo.db.entries.insert_one(entry.dict())
 
     @classmethod
     def delete(self, domain: str, group: str, title: str) -> None:

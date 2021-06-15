@@ -1,10 +1,12 @@
 from datetime import datetime
 import pytz
+from bson.objectid import ObjectId
 
 entries = dict(
     name="entries",
     data=[
         {
+            "_id": ObjectId("60c809cbec2fc163dbda3666"),
             "title": "cat",
             "group": "feline",
             "domain": "pets",
@@ -13,6 +15,7 @@ entries = dict(
             "createdAt": datetime(1970, 1, 1, tzinfo=pytz.UTC),
         },
         {
+            "_id": ObjectId("af24d828d3622d8660c80a01"),
             "title": "cockatoo",
             "group": "bird",
             "domain": "pets",
@@ -21,6 +24,7 @@ entries = dict(
             "createdAt": datetime(1970, 1, 1, 12, 30, 59, tzinfo=pytz.UTC),
         },
         {
+            "_id": ObjectId("80a16c08752a59e40696660c"),
             "title": "experience",
             "group": "entity",
             "domain": "cx",

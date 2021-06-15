@@ -5,6 +5,7 @@ from typing import Optional
 
 class DomainQuery(BaseModel):
     domain: str = Field(min_length=1)
+    group: Optional[str] = Field(regex=r"^[A-Za-z\-]+$")
 
 
 class EntryQuery(DomainQuery):

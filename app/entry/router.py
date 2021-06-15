@@ -13,23 +13,30 @@ register_error_handlers(bp)
 @validate()
 def list_all(query: DomainQuery):
     entries = entry_service.get_all(query.domain)
-    return jsonify(entries)
+    return jsonify([entry.to_simple_json() for entry in entries])
+
+
+@bp.get("/one")
+@validate()
+def get_one(query: EntryQuery):
+    if entry := entry_service.get_one(**query.dict()):
+        return jsonify(entry.to_json())
+    raise NotFound("Entry Not Found")
+
+
+@bp.get("/<string:id>")
+def get_entry(id: str):
+    if entry := entry_service.get(id):
+        return jsonify(entry.to_json())
+    print(entry)
+    raise NotFound("Entry Not Found")
 
 
 @bp.post("")
 @validate()
 def create(body: EntryCreation):
-    entry_service.save(entry=body.dict())
-    return jsonify({}), 201
-
-
-@bp.get("")
-@validate()
-def get_one(query: EntryQuery):
-    if entry := entry_service.get_one(**query.dict()):
-        print(entry.json())
-        return jsonify(entry.json())
-    raise NotFound("Entry Not Found")
+    _id = entry_service.save(entry=body)
+    return jsonify(dict(id=str(_id))), 201
 
 
 @bp.delete("")
