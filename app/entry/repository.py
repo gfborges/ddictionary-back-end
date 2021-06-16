@@ -3,18 +3,18 @@ from app.entry.entry import Entry
 from app.entry.models import EntryCreation
 from app.database.mongo import get_db
 
+mongo = get_db()
+
 
 class EntryReposiory:
-    mongo = get_db()
-
-    @classmethod
-    def get_all(self, domain: str) -> list[dict]:
-        cursor = self.mongo.db.entries.find(filter={"domain": domain})
+    @staticmethod
+    def get_all(domain: str) -> list[dict]:
+        cursor = mongo.db.entries.find(filter={"domain": domain})
         return [Entry.new_entry(entry) for entry in cursor]
 
-    @classmethod
-    def get_one(self, domain: str, group: str, title: str) -> Entry:
-        entry = self.mongo.db.entries.find_one(
+    @staticmethod
+    def get_one(domain: str, group: str, title: str) -> Entry:
+        entry = mongo.db.entries.find_one(
             filter={
                 "domain": domain,
                 "group": group,
@@ -23,25 +23,32 @@ class EntryReposiory:
         )
         return Entry.new_entry(entry)
 
-    @classmethod
-    def get(self, id: str) -> Entry:
-        entry = self.mongo.db.entries.find_one(
+    @staticmethod
+    def get(id: str) -> Entry:
+        entry = mongo.db.entries.find_one(
             filter={
                 "_id": ObjectId(id),
             }
         )
         return Entry.new_entry(entry)
 
-    @classmethod
-    def save(self, entry: EntryCreation) -> None:
-        return self.mongo.db.entries.insert_one(entry.dict())
+    @staticmethod
+    def save(entry: EntryCreation) -> None:
+        return mongo.db.entries.insert_one(entry.dict())
 
-    @classmethod
-    def delete(self, domain: str, group: str, title: str) -> None:
-        return self.mongo.db.entries.delete_one(
+    @staticmethod
+    def delete(id: str) -> None:
+        return mongo.db.entries.delete_one(
             filter={
-                "domain": domain,
-                "group": group,
-                "title": title,
+                "_id": ObjectId(id),
             },
         )
+
+    @staticmethod
+    def update(id: str, entry):
+        print(entry.dict())
+        result = mongo.db.entries.update_one(
+            filter=dict(_id=ObjectId(id)), update={"$set": entry.dict()}
+        )
+        print(result.matched_count, result.modified_count)
+        return result

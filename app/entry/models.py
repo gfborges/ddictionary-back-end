@@ -16,3 +16,10 @@ class EntryQuery(DomainQuery):
 class EntryCreation(EntryQuery):
     definitions: list[str] = Field(min_length=1)
     translations: Optional[list[str]] = Field(min_length=1)
+
+
+class EntryUpdate(BaseModel):
+    title: Optional[str] = Field(regex=r"^[A-Za-z\-]+$")
+    group: Optional[str] = Field(regex=r"^[A-Za-z\-]+$")
+    definitions: Optional[list[str]] = Field(min_length=1)
+    translations: Optional[list[str]] = Field(min_length=1)
