@@ -1,4 +1,3 @@
-from pymongo.results import DeleteResult
 from app.entry.entry import Entry
 from app.entry.models import EntryCreation, EntryUpdate
 from app.entry.repository import EntryReposiory

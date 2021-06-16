@@ -1,7 +1,6 @@
 from bson.objectid import ObjectId
-from pydantic import Field
 from app.entry.models import EntryCreation
-from datetime import date, datetime
+from datetime import datetime
 
 
 class Entry:

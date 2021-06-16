@@ -6,6 +6,8 @@ name = "pypi"
 [scripts]
 test="pytest"
 start="gunicorn -b '0.0.0.0:8000' 'wsgi:app' "
+lint="flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics"
+lint-errors="flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics"
 
 [packages]
 appdirs = "==1.4.4"
@@ -34,6 +36,7 @@ pytest = "*"
 mongomock = "*"
 black = "==21.5b2"
 pytest-mongodb = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.9"
