@@ -1,6 +1,7 @@
 from bson.objectid import ObjectId
+from pymongo.results import DeleteResult, InsertOneResult, UpdateResult
 from app.entry.entry import Entry
-from app.entry.models import EntryCreation
+from app.entry.models import EntryCreation, EntryUpdate
 from app.database.mongo import get_db
 
 mongo = get_db()
@@ -8,7 +9,7 @@ mongo = get_db()
 
 class EntryReposiory:
     @staticmethod
-    def get_all(domain: str) -> list[dict]:
+    def get_all(domain: str) -> list[Entry]:
         cursor = mongo.db.entries.find(filter={"domain": domain})
         return [Entry.new_entry(entry) for entry in cursor]
 
@@ -33,11 +34,11 @@ class EntryReposiory:
         return Entry.new_entry(entry)
 
     @staticmethod
-    def save(entry: EntryCreation) -> None:
+    def save(entry: EntryCreation) -> InsertOneResult:
         return mongo.db.entries.insert_one(entry.dict())
 
     @staticmethod
-    def delete(id: str) -> None:
+    def delete(id: str) -> DeleteResult:
         return mongo.db.entries.delete_one(
             filter={
                 "_id": ObjectId(id),
@@ -45,10 +46,7 @@ class EntryReposiory:
         )
 
     @staticmethod
-    def update(id: str, entry):
-        print(entry.dict())
-        result = mongo.db.entries.update_one(
+    def update(id: str, entry: EntryUpdate) -> UpdateResult:
+        return mongo.db.entries.update_one(
             filter=dict(_id=ObjectId(id)), update={"$set": entry.dict()}
         )
-        print(result.matched_count, result.modified_count)
-        return result
