@@ -2,6 +2,7 @@ version: '3'
 services:
     flask:
         build: .
+        container_name: flask
         restart: unless-stopped
         ports:
             - "8000:8000"
@@ -10,6 +11,8 @@ services:
             APP_DEBUG: "False"
             MONGODB_HOST: "mongodb"
             MONGODB_DB: "ddictDB"
+            MONGODB_USER: "${MONGODB_USER}"
+            MONGODB_PWD: "${MONGODB_PWD}"
         networks:
             - backend 
     mongodb:
@@ -25,6 +28,8 @@ services:
             MONDODB_LOG_DIR: /dev/null
         volumes:
             - mongodbdata:/data/db
+        ports:
+            - "27017:27017"
         networks:
             - backend
 networks:

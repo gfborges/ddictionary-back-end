@@ -30,6 +30,7 @@ toml = "==0.10.2"
 typing-extensions = "==3.10.0.0"
 Werkzeug = "==2.0.1"
 pytz = "*"
+flask-cors = "*"
 
 [dev-packages]
 pytest = "*"

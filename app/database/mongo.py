@@ -8,7 +8,7 @@ def get_db():
 
 
 def get_mongo_uri():
-    return f"mongodb://{Mongo.HOST}:27017/{Mongo.DB}"
+    return f"mongodb://{Mongo.USER}:{Mongo.PWD}@{Mongo.HOST}:27017/{Mongo.DB}?authSource=admin"
 
 
 mongo = PyMongo()

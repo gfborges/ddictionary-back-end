@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from app.database.mongo import get_db, get_mongo_uri
+from flask_cors import CORS
 
 
 def register_blueprints(app: Flask):
@@ -15,6 +16,7 @@ def init_db(app: Flask):
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
     init_db(app)
     register_blueprints(app)
 
