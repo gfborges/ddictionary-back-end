@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify
 from flask_pydantic import validate
 from werkzeug.exceptions import NotFound
-from app.entry.errors import register_error_handlers
+from app.errors import register_error_handlers
 from app.entry.models import (
     DomainQuery,
     EntryCreation,

@@ -8,9 +8,7 @@ def test_username_required(client):
 
 
 def test_password_required(client):
-    no_password = {
-        "username": "pets",
-    }
+    no_password = {"username": "pets"}
     empty_password = no_password | {"password": ""}
     empty_password_res = client.post("/auth", json=empty_password)
     no_password_res = client.post("/auth", json=no_password)
