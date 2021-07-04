@@ -1,26 +1,27 @@
+from app.auth import config_jwt
 from flask import Flask, jsonify
-from app.database.mongo import get_db, get_mongo_uri
+from app.database.mongo import get_db, config_mongo
 from app.database.cloudinarycfg import config_cloudinary
 from flask_cors import CORS
 
 
 def register_blueprints(app: Flask):
     from app.entry.router import bp as entry_bp
+    from app.domain.router import bp as domain_bp
+    from app.auth.router import bp as auth_bp
 
     app.register_blueprint(entry_bp)
-
-
-def init_db(app: Flask):
-    app.config["MONGO_URI"] = get_mongo_uri()
-    get_db().init_app(app)
+    app.register_blueprint(domain_bp)
+    app.register_blueprint(auth_bp)
 
 
 def create_app():
     app = Flask(__name__)
     CORS(app)
-    init_db(app)
+    config_mongo(app)
     register_blueprints(app)
-    config_cloudinary()
+    config_cloudinary(app)
+    config_jwt(app)
 
     @app.route("/health")
     def health():

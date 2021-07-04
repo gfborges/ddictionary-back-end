@@ -13,7 +13,7 @@ class Entry:
         definitions: list[str],
         translations: list[str] = None,
         image: str = None,
-        createdAt: list[str] = datetime.utcnow(),
+        createdAt: datetime = datetime.utcnow(),
     ):
         self.id = _id
         self.domain = domain

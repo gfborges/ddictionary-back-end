@@ -32,7 +32,8 @@ Werkzeug = "==2.0.1"
 pytz = "*"
 flask-cors = "*"
 cloudinary = "*"
-flask-jwt = "*"
+flask-jwt-extended = "*"
+bcrypt = "*"
 
 [dev-packages]
 pytest = "*"

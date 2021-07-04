@@ -12,3 +12,7 @@ class Cloudinary:
     API_KEY = os.getenv("CLOUDINARY_KEY")
     SECRET = os.getenv("CLOUDINARY_SECRET")
     NAME = os.getenv("CLOUDINARY_NAME")
+
+
+class Auth:
+    JWT_SECRET = os.getenv("JWT_SECRET")
