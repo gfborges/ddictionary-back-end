@@ -23,7 +23,7 @@ def test_login_success_with_correct_password_and_username(client):
     }
     res = client.post("/auth", json=no_password)
     assert res.status_code == 200
-    assert res.json is True
+    assert res.json.get("access_token") == "token"
 
 
 def test_login_fails_with_incorrect_password_and_username(client):
@@ -32,5 +32,7 @@ def test_login_fails_with_incorrect_password_and_username(client):
         "password": "unsafe_password",
     }
     res = client.post("/auth", json=no_password)
-    assert res.status_code == 200
-    assert res.json is False
+    assert res.status_code == 403
+    assert (
+        res.json.get("message") == "403 Forbidden: Wrong username or password"
+    )

@@ -1,12 +1,13 @@
 from flask.blueprints import Blueprint
 from flask import jsonify
-from werkzeug.exceptions import NotFound
+from werkzeug.exceptions import Forbidden, NotFound
 
 
 def register_error_handlers(bp: Blueprint):
-    bp.register_error_handler(NotFound, handle_not_found)
+    bp.register_error_handler(NotFound, handle_error)
+    bp.register_error_handler(Forbidden, handle_error)
 
 
-def handle_not_found(e):
+def handle_error(e):
     error = dict(message=str(e))
-    return jsonify(error), 404
+    return jsonify(error), e.code

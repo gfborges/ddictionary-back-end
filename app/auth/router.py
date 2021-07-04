@@ -1,13 +1,20 @@
-from flask.json import jsonify
+from app.errors import register_error_handlers
+from app.auth.service import AuthService
+from werkzeug.exceptions import Forbidden
 from app.auth.models import LoginInfo
 from flask.blueprints import Blueprint
 from flask_pydantic.core import validate
 
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
+register_error_handlers(bp)
 
 
 @bp.post("")
 @validate()
 def auth(body: LoginInfo):
-    return jsonify(True)
+    password = body.password
+    username = body.username
+    if AuthService.authenticate(domain_name=username, password=password):
+        return {"access_token": "token"}, 200
+    raise Forbidden("Wrong username or password")
