@@ -16,7 +16,8 @@ class EntryCreation(EntryQuery):
     definitions: list[str] = Field(min_length=1)
     translations: Optional[list[str]] = Field(default=[])
     image: Optional[str] = Field(
-        regex=r"^data:image/.*;base64,[A-Za-z0-9\+/]+"
+        regex=r"^data:image/.*;base64,[A-Za-z0-9\+/]+={0,2}$",
+        max_length=2_700_20,
     )
 
 

@@ -25,6 +25,17 @@ def test_create_entry(client, bucket):
     )
 
 
+def test_image_is_too_big(client):
+    longimage = "data:image/jpeg/base64," + "a" * 2_699_997
+    created = client.post(
+        "/entries",
+        json=dog | {"image": longimage},
+    )
+    assert (
+        created.status_code == 400
+    ), "POST /entries returned wrong status_code"
+
+
 def test_create_entry_with_translation(client):
     json = dog | {"translations": ["cachorro", "hund"]}
     res = client.post("/entries", json=json)
