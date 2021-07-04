@@ -1,5 +1,4 @@
 from bson.objectid import ObjectId
-import cloudinary
 from pymongo.results import DeleteResult, InsertOneResult, UpdateResult
 from app.entry.entry import Entry
 from app.entry.models import EntryCreation, EntryUpdate
