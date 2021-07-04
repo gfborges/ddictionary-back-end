@@ -1,10 +1,15 @@
 from bson.objectid import ObjectId
+import cloudinary
 from pymongo.results import DeleteResult, InsertOneResult, UpdateResult
 from app.entry.entry import Entry
 from app.entry.models import EntryCreation, EntryUpdate
 from app.database.mongo import get_db
+from app.database.cloudinarycfg import get_cloudinary_uploader
 
 mongo = get_db()
+
+
+cloudinary_uploader = get_cloudinary_uploader()
 
 
 class EntryReposiory:
@@ -35,7 +40,9 @@ class EntryReposiory:
 
     @staticmethod
     def save(entry: EntryCreation) -> InsertOneResult:
-        return mongo.db.entries.insert_one(entry.dict())
+        res = ImageRepository.save(entry)
+        image = res.get("secure_url")
+        return mongo.db.entries.insert_one(entry.dict() | {"image": image})
 
     @staticmethod
     def delete(id: str) -> DeleteResult:
@@ -50,3 +57,10 @@ class EntryReposiory:
         return mongo.db.entries.update_one(
             filter=dict(_id=ObjectId(id)), update={"$set": entry.dict()}
         )
+
+
+class ImageRepository:
+    @staticmethod
+    def save(entry: EntryCreation):
+        public_id = f"{entry.domain}/{entry.group}/{entry.title}"
+        return cloudinary_uploader.upload(entry.image, public_id=public_id)

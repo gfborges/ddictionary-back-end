@@ -3,10 +3,11 @@ dog = dict(
     group="canidae",
     domain="pets",
     definitions=["fun pet", "energetic animal"],
+    image="data:image/png;base64,Ab9+/",
 )
 
 
-def test_create_entry(client, mongo):
+def test_create_entry(client, bucket):
     created = client.post("/entries", json=dog)
     assert (
         created.status_code == 201
@@ -18,6 +19,10 @@ def test_create_entry(client, mongo):
     assert data.get("title") == dog["title"]
     assert data.get("group") == dog["group"]
     assert data.get("definitions") == dog["definitions"]
+    assert data.get("image") == (
+        bucket.url_secure
+        + "/ddict/image/upload/v1607/pets/canidae/The-DOG.png"
+    )
 
 
 def test_create_entry_with_translation(client):

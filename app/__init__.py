@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from app.database.mongo import get_db, get_mongo_uri
+from app.database.cloudinarycfg import config_cloudinary
 from flask_cors import CORS
 
 
@@ -19,6 +20,7 @@ def create_app():
     CORS(app)
     init_db(app)
     register_blueprints(app)
+    config_cloudinary()
 
     @app.route("/health")
     def health():

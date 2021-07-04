@@ -31,6 +31,8 @@ typing-extensions = "==3.10.0.0"
 Werkzeug = "==2.0.1"
 pytz = "*"
 flask-cors = "*"
+cloudinary = "*"
+flask-jwt = "*"
 
 [dev-packages]
 pytest = "*"

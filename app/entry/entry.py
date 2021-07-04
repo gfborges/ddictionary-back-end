@@ -12,6 +12,7 @@ class Entry:
         group: str,
         definitions: list[str],
         translations: list[str] = None,
+        image: str = None,
         createdAt: list[str] = datetime.utcnow(),
     ):
         self.id = _id
@@ -21,6 +22,7 @@ class Entry:
         self.definitions = definitions
         self.translations = translations or []
         self.createdAt = createdAt
+        self.image = image
 
     @staticmethod
     def new_entry(data: EntryCreation):
@@ -48,6 +50,7 @@ class Entry:
             definitions=self.definitions,
             translations=self.translations,
             createdAt=self.createdAt.isoformat(),
+            image=self.image,
         )
 
     def to_simple_json(self):

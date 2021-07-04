@@ -14,7 +14,10 @@ class EntryQuery(DomainQuery):
 
 class EntryCreation(EntryQuery):
     definitions: list[str] = Field(min_length=1)
-    translations: Optional[list[str]] = Field(min_length=1)
+    translations: Optional[list[str]] = Field(default=[])
+    image: Optional[str] = Field(
+        regex=r"^data:image/.*;base64,[A-Za-z0-9\+/]+"
+    )
 
 
 class EntryUpdate(BaseModel):

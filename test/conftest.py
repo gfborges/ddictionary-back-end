@@ -1,15 +1,18 @@
+from test.cloudinary_mock import CloudinaryMock
 from flask.app import Flask
 from flask.testing import FlaskClient
 import pytest
 from unittest.mock import patch
 from test.pymongomock import PyMongoMock
 import app.database.mongo as mongodb
+import app.database.cloudinarycfg as cloudinarycfg
 from app import create_app
 
 setup = 0
 teardown = 0
 
 mongodb_mock = PyMongoMock()
+bucket_mock = CloudinaryMock()
 
 
 @pytest.fixture
@@ -18,8 +21,14 @@ def mongo():
         yield mongodb.mongo
 
 
+@pytest.fixture
+def bucket():
+    with patch.object(cloudinarycfg, "cloudinary_uploader", bucket_mock):
+        yield bucket_mock
+
+
 @pytest.fixture(scope="function")
-def app(mongo) -> Flask:
+def app(mongo, bucket) -> Flask:
     app = create_app()
     with app.app_context():
         PyMongoMock.test_data(mongo)
