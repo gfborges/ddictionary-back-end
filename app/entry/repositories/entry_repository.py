@@ -3,12 +3,9 @@ from pymongo.results import DeleteResult, InsertOneResult, UpdateResult
 from app.entry.entry import Entry
 from app.entry.models import EntryCreation, EntryUpdate
 from app.database.mongo import get_db
-from app.database.cloudinarycfg import get_cloudinary_uploader
+from app.entry.repositories import image_repository
 
 mongo = get_db()
-
-
-cloudinary_uploader = get_cloudinary_uploader()
 
 
 def get_all(domain: str) -> tuple[bool, list[dict]]:
@@ -39,7 +36,7 @@ def get(id: str) -> tuple[bool, dict]:
 
 
 def save(entry: EntryCreation) -> InsertOneResult:
-    res = ImageRepository.save(entry)
+    res = image_repository.save(entry)
     image = res.get("secure_url")
     return mongo.db.entries.insert_one(entry.dict() | {"image": image})
 
@@ -60,9 +57,3 @@ def update(id: str, entry: EntryUpdate) -> UpdateResult:
 
 def is_ok(entry) -> bool:
     return entry is not None
-
-
-class ImageRepository:
-    def save(entry: EntryCreation):
-        public_id = f"{entry.domain}/{entry.group}/{entry.title}"
-        return cloudinary_uploader.upload(entry.image, public_id=public_id)
