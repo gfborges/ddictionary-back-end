@@ -12,7 +12,7 @@ def test_get_one_entry(client):
     assert data.get("domain") == "pets"
     assert len(data.get("definitions")) == 2
     assert len(data.get("translations")) == 1
-    assert data.get("createdAt") == "1970-01-01T12:30:59"
+    assert data.get("created_at") == "1970-01-01T12:30:59"
 
 
 def test_get_non_existant_entry(client):
@@ -32,4 +32,4 @@ def test_get_by_id(client, mongo):
     res = client.get("/entries/" + _id)
     data = res.json
     assert res.status_code == 200
-    assert data.get("id") == _id
+    assert data.get("_id") == _id

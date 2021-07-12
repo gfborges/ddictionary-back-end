@@ -12,7 +12,7 @@ def test_create_entry(client, bucket):
     assert (
         created.status_code == 201
     ), "POST /entries returned wrong status_code"
-    _id = created.json.get("id")
+    _id = created.json.get("_id")
     res = client.get("/entries/" + _id)
     assert res.status_code == 200
     data = res.json

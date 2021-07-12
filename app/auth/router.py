@@ -1,3 +1,4 @@
+from flask_jwt_extended.utils import create_access_token
 from app.errors import register_error_handlers
 from app.auth.service import AuthService
 from werkzeug.exceptions import Forbidden
@@ -16,5 +17,6 @@ def auth(body: LoginInfo):
     password = body.password
     username = body.username
     if AuthService.authenticate(domain_name=username, password=password):
-        return {"access_token": "token"}, 200
+        token = create_access_token(identity=username)
+        return {"access_token": token}, 200
     raise Forbidden("Wrong username or password")

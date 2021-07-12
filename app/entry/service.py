@@ -1,20 +1,25 @@
 from app.entry.entry import Entry
 from app.entry.models import EntryCreation, EntryUpdate
-from app.entry.repository import EntryReposiory
+from app.entry import repository as EntryReposiory
 
 
 class EntryService:
     @staticmethod
     def get_all(domain: str) -> list[Entry]:
-        return EntryReposiory.get_all(domain)
+        ok, entries = EntryReposiory.get_all(domain)
+        return entries
 
     @staticmethod
     def get_one(domain: str, group: str, title: str) -> Entry:
-        return EntryReposiory.get_one(domain=domain, group=group, title=title)
+        ok, entry = EntryReposiory.get_one(
+            domain=domain, group=group, title=title
+        )
+        return entry
 
     @staticmethod
     def get(id: str) -> Entry:
-        return EntryReposiory.get(id=id)
+        ok, entry = EntryReposiory.get(id=id)
+        return entry
 
     @staticmethod
     def save(entry: EntryCreation) -> Entry:

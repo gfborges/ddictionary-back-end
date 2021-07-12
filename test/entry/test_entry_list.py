@@ -1,17 +1,19 @@
 pets = [
     {
-        "id": "60c809cbec2fc163dbda3666",
+        "_id": "60c809cbec2fc163dbda3666",
         "title": "cat",
         "group": "feline",
         "domain": "pets",
         "definitions": ["crazy animal"],
+        "created_at": "1970-01-01T00:00:00",
     },
     {
-        "id": "af24d828d3622d8660c80a01",
+        "_id": "af24d828d3622d8660c80a01",
         "title": "cockatoo",
         "group": "bird",
         "domain": "pets",
         "definitions": ["weird pet"],
+        "created_at": "1970-01-01T12:30:59",
     },
 ]
 

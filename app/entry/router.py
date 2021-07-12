@@ -1,3 +1,4 @@
+from app.entry.entry import entry_to_json, entry_to_simple_json
 from flask import Blueprint, jsonify
 from flask_pydantic import validate
 from werkzeug.exceptions import NotFound
@@ -18,22 +19,21 @@ register_error_handlers(bp)
 @validate()
 def list_all(query: DomainQuery):
     entries = EntryService.get_all(query.domain)
-    return jsonify([entry.to_simple_json() for entry in entries])
+    return jsonify([entry_to_simple_json(**entry) for entry in entries])
 
 
 @bp.get("/one")
 @validate()
 def get_one(query: EntryQuery):
     if entry := EntryService.get_one(**query.dict()):
-        return jsonify(entry.to_json())
+        return jsonify(entry_to_json(**entry))
     raise NotFound("Entry Not Found")
 
 
 @bp.get("/<string:id>")
 def get_entry(id: str):
     if entry := EntryService.get(id):
-        return jsonify(entry.to_json())
-    print(entry)
+        return jsonify(entry_to_json(**entry))
     raise NotFound("Entry Not Found")
 
 
@@ -41,7 +41,7 @@ def get_entry(id: str):
 @validate()
 def create_entry(body: EntryCreation):
     _id = EntryService.save(entry=body)
-    return jsonify(dict(id=str(_id))), 201
+    return jsonify({"_id": str(_id)}), 201
 
 
 @bp.delete("/<string:id>")

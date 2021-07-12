@@ -6,7 +6,7 @@ def test_update_entry(client):
     res = client.get("/entries/" + cat_id)
     kitty = res.json
     assert res.status_code == 200
-    assert kitty.get("id") == cat_id
+    assert kitty.get("_id") == cat_id
     assert kitty.get("title") == update_data["title"]
 
 
@@ -18,7 +18,7 @@ def test_dont_update_domain(client):
     res = client.get("/entries/" + cat_id)
     kitty = res.json
     assert res.status_code == 200
-    assert kitty.get("id") == cat_id
+    assert kitty.get("_id") == cat_id
     assert kitty.get("domain") == "pets"
 
 

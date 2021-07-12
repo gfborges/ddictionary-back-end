@@ -1,6 +1,7 @@
 from test.cloudinary_mock import CloudinaryMock
 from flask.app import Flask
 from flask.testing import FlaskClient
+from flask_jwt_extended import create_access_token
 import pytest
 from unittest.mock import patch
 from test.pymongomock import PyMongoMock
@@ -33,6 +34,11 @@ def app(mongo, bucket) -> Flask:
     with app.app_context():
         PyMongoMock.test_data(mongo)
         yield app
+
+
+@pytest.fixture()
+def jwt(app):
+    yield create_access_token(identity="pets")
 
 
 @pytest.fixture()

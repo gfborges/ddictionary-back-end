@@ -1,4 +1,3 @@
-from app import domain
 from datetime import datetime
 import pytz
 from bson.objectid import ObjectId
@@ -13,7 +12,7 @@ entries = dict(
             "domain": "pets",
             "definitions": ["crazy animal", "cute pet"],
             "translations": ["gato", "catze"],
-            "createdAt": datetime(1970, 1, 1, tzinfo=pytz.UTC),
+            "created_at": datetime(1970, 1, 1, tzinfo=pytz.UTC),
         },
         {
             "_id": ObjectId("af24d828d3622d8660c80a01"),
@@ -22,7 +21,7 @@ entries = dict(
             "domain": "pets",
             "definitions": ["weird pet", "smart animal"],
             "translations": ["cacatua"],
-            "createdAt": datetime(1970, 1, 1, 12, 30, 59, tzinfo=pytz.UTC),
+            "created_at": datetime(1970, 1, 1, 12, 30, 59, tzinfo=pytz.UTC),
         },
         {
             "_id": ObjectId("80a16c08752a59e40696660c"),
@@ -34,7 +33,7 @@ entries = dict(
                 "how the product is presented and delivered to the customer",
             ],
             "translations": ["experiencia"],
-            "createdAt": datetime(1970, 1, 1, 12, 30, 59, tzinfo=pytz.UTC),
+            "created_at": datetime(1970, 1, 1, 12, 30, 59, tzinfo=pytz.UTC),
         },
     ),
 )

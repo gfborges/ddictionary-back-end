@@ -3,61 +3,26 @@ from app.entry.models import EntryCreation
 from datetime import datetime
 
 
+def entry_to_simple_json(**entry):
+    definitions = entry.get("definitions") or []
+    return {
+        "_id": str(entry.get("_id")),
+        "domain": entry.get("domain"),
+        "title": entry.get("title"),
+        "group": entry.get("group"),
+        "definitions": definitions[:1],
+        "created_at": entry.get("created_at").isoformat(),
+    }
+
+
+def entry_to_json(**entry):
+    json = entry_to_simple_json(**entry)
+    return json | {
+        "definitions": entry.get("definitions"),
+        "translations": entry.get("translations"),
+        "image": entry.get("image"),
+    }
+
+
 class Entry:
-    def __init__(
-        self,
-        _id: ObjectId,
-        domain: str,
-        title: str,
-        group: str,
-        definitions: list[str],
-        translations: list[str] = None,
-        image: str = None,
-        createdAt: datetime = datetime.utcnow(),
-    ):
-        self.id = _id
-        self.domain = domain
-        self.title = title
-        self.group = group
-        self.definitions = definitions
-        self.translations = translations or []
-        self.createdAt = createdAt
-        self.image = image
-
-    @staticmethod
-    def new_entry(data: EntryCreation):
-        if data is not None:
-            return Entry(**data)
-        return None
-
-    def dict(self):
-        return dict(
-            _id=self.id,
-            domain=self.domain,
-            title=self.title,
-            group=self.group,
-            definitions=self.definitions,
-            translations=self.translations,
-            createdAt=self.createdAt,
-        )
-
-    def to_json(self):
-        return dict(
-            id=str(self.id),
-            domain=self.domain,
-            title=self.title,
-            group=self.group,
-            definitions=self.definitions,
-            translations=self.translations,
-            createdAt=self.createdAt.isoformat(),
-            image=self.image,
-        )
-
-    def to_simple_json(self):
-        return dict(
-            id=str(self.id),
-            domain=self.domain,
-            title=self.title,
-            group=self.group,
-            definitions=self.definitions[:1],
-        )
+    pass
