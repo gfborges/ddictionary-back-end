@@ -1,3 +1,4 @@
+from app.errors import register_error_handlers
 from app.auth import config_jwt
 from flask import Flask, jsonify
 from app.database.mongo import get_db, config_mongo
@@ -20,6 +21,7 @@ def create_app():
     CORS(app)
     config_mongo(app)
     register_blueprints(app)
+    register_error_handlers(app)
     config_cloudinary(app)
     config_jwt(app)
 
@@ -28,6 +30,7 @@ def create_app():
         health = {
             "api": "ok",
             "mongo": get_db().db.command("ping"),
+            "cloudinary": "ok",
         }
         return jsonify(health), 200
 

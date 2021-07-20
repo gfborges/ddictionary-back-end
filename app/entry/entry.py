@@ -1,8 +1,3 @@
-from bson.objectid import ObjectId
-from app.entry.models import EntryCreation
-from datetime import datetime
-
-
 def entry_to_simple_json(**entry):
     definitions = entry.get("definitions") or []
     return {

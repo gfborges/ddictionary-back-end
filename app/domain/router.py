@@ -7,7 +7,6 @@ from flask import Blueprint
 from flask.json import jsonify
 
 bp = Blueprint("domains", __name__, url_prefix="/domains")
-register_error_handlers(bp)
 
 
 @bp.get("/<string:domain_name>")

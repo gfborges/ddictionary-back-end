@@ -9,6 +9,10 @@ def get_db():
     return mongo
 
 
+def mongo_health():
+    return get_db().db.command("ping")
+
+
 def get_mongo_uri():
     return f"mongodb://{Mongo.USER}:{Mongo.PWD}@{Mongo.HOST}:27017/{Mongo.DB}?authSource=admin"
 

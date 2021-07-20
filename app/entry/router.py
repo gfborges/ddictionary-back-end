@@ -12,7 +12,6 @@ from app.entry.models import (
 from app.entry.services import entry_service
 
 bp = Blueprint("entry", __name__, url_prefix="/entries")
-register_error_handlers(bp)
 
 
 @bp.get("/all")

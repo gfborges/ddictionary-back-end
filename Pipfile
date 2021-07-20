@@ -45,6 +45,7 @@ pytest-mongodb = "*"
 flake8 = "*"
 pytest-cov = "*"
 coverage = "==4.5.4"
+mypy = "*"
 
 [requires]
 python_version = "3.9"
