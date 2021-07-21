@@ -25,6 +25,7 @@ def test_login_success_with_correct_password_and_username(client, jwt):
         "password": "secret_password",
     }
     res = client.post("/auth", json=no_password)
+    assert res.status_code == 200
     access_token = res.json.get("access_token")
     recieved = decode_token(access_token, allow_expired=True)
     expected = decode_token(jwt, allow_expired=True)

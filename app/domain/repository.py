@@ -1,14 +1,13 @@
+from pymongo.results import InsertOneResult
 from app.domain.models import DomainCreation
-from app.domain.domain import Domain
 from app.database.mongo import get_db
 
 mongo = get_db()
 
 
-def find_one(domain_name: str) -> Domain:
-    if domain := mongo.db.domains.find_one({"name": domain_name}):
-        return Domain(**domain)
+def find_one(domain_slug: str) -> dict:
+    return mongo.db.domains.find_one({"slug": domain_slug})
 
 
-def save(domain: Domain):
-    return mongo.db.domains.insert_one(domain.dict())
+def save(domain: dict) -> InsertOneResult:
+    return mongo.db.domains.insert_one(domain)

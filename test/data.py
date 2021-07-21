@@ -43,12 +43,14 @@ domains = dict(
     data=(
         {
             "_id": ObjectId("c23f57d571bc787f7a7a87a0"),
-            "name": "pets",
+            "name": "Pets",
+            "slug": "pets",
             "password": "$2b$12$Gu3z4BSMKaSlMwiY9MeKDeakBVQ/fuPeehKGSd3eaqGOm3jxHfupC",
         },
         {
             "_id": ObjectId("07e9fc07b80fe2a92d4ae063"),
-            "name": "cx",
+            "name": "Customer XP",
+            "slug": "cx",
             "password": "$2b$12$tGss/ltJgIUcM3BHUbDjd.y2OhkI5ZI5.QGtC0uzhDZU4WK7iUrE2",
         },
     ),

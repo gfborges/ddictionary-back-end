@@ -2,36 +2,18 @@ from app.domain.models import DomainCreation
 import bcrypt
 
 
-class Domain:
-    def __init__(self, **domain):
-        self.name = domain.get("name")
-        self.password = domain.get("password").encode()
-        self.id = domain.get("_id")
+def __hash_password(domain: DomainCreation):
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(domain.password.encode(), salt).decode()
 
-    @staticmethod
-    def new_domain(domain: DomainCreation):
-        domain = domain.dict() | {"password": Domain.__hash_password(domain)}
-        return Domain(**domain)
 
-    @staticmethod
-    def __hash_password(domain: DomainCreation):
-        salt = bcrypt.gensalt()
-        return bcrypt.hashpw(domain.password.encode(), salt).decode()
+def new_domain(domain_data: DomainCreation):
+    return domain_data.dict() | {"password": __hash_password(domain_data)}
 
-    def __dict__(self):
-        return {
-            "name": self.name,
-            "id": str(self.id),
-        }
 
-    def dict(self):
-        d = {
-            "name": self.name,
-            "password": self.password,
-        }
-        if self.id is not None:
-            d | {"id": self.id}
-        return d
-
-    def to_json(self):
-        return self.__dict__()
+def domain_to_json(domain: dict):
+    return {
+        "name": domain.get("name"),
+        "slug": domain.get("slug"),
+        "_id": str(domain.get("_id")),
+    }

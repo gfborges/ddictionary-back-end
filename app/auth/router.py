@@ -16,7 +16,7 @@ register_error_handlers(bp)
 def auth(body: LoginInfo):
     password = body.password
     username = body.username
-    if AuthService.authenticate(domain_name=username, password=password):
+    if AuthService.authenticate(domain_slug=username, password=password):
         token = create_access_token(identity=username)
         return {"access_token": token}, 200
     raise Forbidden("Wrong username or password")

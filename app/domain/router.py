@@ -1,4 +1,4 @@
-from app.errors import register_error_handlers
+from app.domain.domain import domain_to_json
 from app.domain.models import DomainCreation
 from flask_pydantic.core import validate
 import app.domain.service as DomainService
@@ -9,10 +9,10 @@ from flask.json import jsonify
 bp = Blueprint("domains", __name__, url_prefix="/domains")
 
 
-@bp.get("/<string:domain_name>")
-def find_one(domain_name: str):
-    if domain := DomainService.find_one(domain_name=domain_name):
-        return jsonify(domain.to_json()), 200
+@bp.get("/<string:domain_slug>")
+def find_one(domain_slug: str):
+    if domain := DomainService.find_one(domain_slug=domain_slug):
+        return jsonify(domain_to_json(domain)), 200
     raise NotFound("Domain not found")
 
 
@@ -20,4 +20,4 @@ def find_one(domain_name: str):
 @validate()
 def create_domain(body: DomainCreation):
     _id = DomainService.save(domain=body)
-    return jsonify({"id": _id}), 200
+    return jsonify({"_id": str(_id)}), 201
