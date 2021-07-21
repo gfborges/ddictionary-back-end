@@ -1,4 +1,4 @@
-from app.domain.service import DomainService
+import app.domain.service as DomainService
 import bcrypt
 
 

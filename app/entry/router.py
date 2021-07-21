@@ -2,7 +2,7 @@ from app.entry.entry import entry_to_json, entry_to_simple_json
 from flask import Blueprint, jsonify
 from flask_pydantic import validate
 from werkzeug.exceptions import NotFound
-from app.errors import register_error_handlers
+from flask_jwt_extended import jwt_required
 from app.entry.models import (
     DomainQuery,
     EntryCreation,
@@ -38,6 +38,7 @@ def get_entry(id: str):
 
 @bp.post("")
 @validate()
+@jwt_required()
 def create_entry(body: EntryCreation):
     _id = entry_service.save(entry=body)
     return jsonify({"_id": str(_id)}), 201
