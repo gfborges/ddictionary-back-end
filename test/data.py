@@ -46,11 +46,13 @@ domains = dict(
             "name": "Pets",
             "slug": "pets",
             "password": "$2b$12$Gu3z4BSMKaSlMwiY9MeKDeakBVQ/fuPeehKGSd3eaqGOm3jxHfupC",
+            "groups": ["feline", "bird"],
         },
         {
             "_id": ObjectId("07e9fc07b80fe2a92d4ae063"),
             "name": "Customer XP",
             "slug": "cx",
+            "groups": [],
             "password": "$2b$12$tGss/ltJgIUcM3BHUbDjd.y2OhkI5ZI5.QGtC0uzhDZU4WK7iUrE2",
         },
     ),

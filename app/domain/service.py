@@ -12,3 +12,9 @@ def save(domain: DomainCreation):
     domain = new_domain(domain)
     result = domain_reposiotry.save(domain)
     return str(result.inserted_id)
+
+
+def update(domain_slug: str, new_group: str):
+    result = domain_reposiotry.update(domain_slug, new_group)
+    print(result)
+    return True

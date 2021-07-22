@@ -11,8 +11,7 @@ def test_domain_creation(client, mongo):
     res = client.get("/domains/new_domain")
     new_domain = res.json
     assert res.status_code == 200
-    assert new_domain.get("name") == "New Domain"
-    assert new_domain.get("slug") == "new_domain"
+    assert new_domain.get("groups") == []
 
 
 def test_domain_creation_password(client, mongo):

@@ -6,6 +6,7 @@ class AuthService:
     @staticmethod
     def authenticate(domain_slug: str, password: str) -> bool:
         if domain := DomainService.find_one(domain_slug=domain_slug):
-            return bcrypt.checkpw(
+            authenticated = bcrypt.checkpw(
                 password.encode(), domain.get("password").encode()
             )
+            return domain if authenticated else None

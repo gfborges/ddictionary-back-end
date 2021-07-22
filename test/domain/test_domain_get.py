@@ -4,6 +4,7 @@ def test_get_domain(client):
     assert res.status_code == 200
     assert data.get("name") == "Pets"
     assert data.get("slug") == "pets"
+    assert data.get("groups") == ["feline", "bird"]
     assert data.get("password") is None
 
 

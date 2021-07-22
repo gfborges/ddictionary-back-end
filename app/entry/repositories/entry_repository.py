@@ -41,17 +41,19 @@ def save(entry: EntryCreation) -> InsertOneResult:
     return mongo.db.entries.insert_one(entry.dict() | {"image": image})
 
 
-def delete(id: str) -> DeleteResult:
+def delete(domain: str, id: str) -> DeleteResult:
     return mongo.db.entries.delete_one(
         filter={
+            "domain": domain,
             "_id": ObjectId(id),
         },
     )
 
 
 def update(id: str, entry: EntryUpdate) -> UpdateResult:
+    filters = {"_id": ObjectId(id), "domain": entry.domain}
     return mongo.db.entries.update_one(
-        filter=dict(_id=ObjectId(id)), update={"$set": entry.dict()}
+        filter=filters, update={"$set": entry.dict()}
     )
 
 

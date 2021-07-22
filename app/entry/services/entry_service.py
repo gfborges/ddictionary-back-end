@@ -25,9 +25,9 @@ def save(entry: EntryCreation) -> Entry:
     return result.inserted_id
 
 
-def delete(id: str):
-    entry_repository.delete(id=id)
+def delete(domain: str, id: str):
+    return entry_repository.delete(domain=domain, id=id)
 
 
 def update(id: str, entry: EntryUpdate):
-    entry_repository.update(id, entry)
+    return entry_repository.update(id, entry)

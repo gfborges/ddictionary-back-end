@@ -11,3 +11,9 @@ def find_one(domain_slug: str) -> dict:
 
 def save(domain: dict) -> InsertOneResult:
     return mongo.db.domains.insert_one(domain)
+
+
+def update(domain_slug: str, new_group: str):
+    filters = {"slug": domain_slug}
+    update = {"$push": {"groups": new_group}}
+    return mongo.db.domains.update_one(filters, update)

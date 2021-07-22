@@ -19,7 +19,7 @@ def test_password_required(client):
     assert no_password_res.status_code == 400
 
 
-def test_login_success_with_correct_password_and_username(client, jwt):
+def test_login_success_with_correct_password_and_username(client):
     no_password = {
         "username": "pets",
         "password": "secret_password",
@@ -28,8 +28,8 @@ def test_login_success_with_correct_password_and_username(client, jwt):
     assert res.status_code == 200
     access_token = res.json.get("access_token")
     recieved = decode_token(access_token, allow_expired=True)
-    expected = decode_token(jwt, allow_expired=True)
-    assert recieved.get("sub") == expected.get("sub")
+    assert recieved.get("sub") == "pets"
+    assert recieved.get("_id") == "c23f57d571bc787f7a7a87a0"
 
 
 def test_login_fails_with_incorrect_password_and_username(client):

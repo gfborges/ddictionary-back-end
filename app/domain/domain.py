@@ -8,12 +8,14 @@ def __hash_password(domain: DomainCreation):
 
 
 def new_domain(domain_data: DomainCreation):
-    return domain_data.dict() | {"password": __hash_password(domain_data)}
+    return domain_data.dict() | {
+        "password": __hash_password(domain_data),
+        "groups": [],
+    }
 
 
 def domain_to_json(domain: dict):
-    return {
-        "name": domain.get("name"),
-        "slug": domain.get("slug"),
-        "_id": str(domain.get("_id")),
-    }
+    json = dict(domain)
+    json["_id"] = str(json.get("_id"))
+    del json["password"]
+    return json
