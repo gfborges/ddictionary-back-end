@@ -33,5 +33,7 @@ jobs:
         python -m pipenv run lint
     - name: Test with pytest
       run: |
-        python -m pipenv shell
+        docker-comopose -f test-db.yml down
+        docker-comopose -f test-db.yml up -d
         python cli.py test
+        docker-compose -f test-db.yml down
