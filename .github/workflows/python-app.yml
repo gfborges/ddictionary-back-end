@@ -33,4 +33,4 @@ jobs:
         python -m pipenv run lint
     - name: Test with pytest
       run: |
-        python -m pipenv run test
+        python cli.py test

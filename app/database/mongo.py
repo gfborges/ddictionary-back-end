@@ -1,5 +1,5 @@
 from flask_pymongo import PyMongo
-from app.config import Mongo
+from app.config import MongoConfig
 from flask import Flask
 
 mongo = PyMongo()
@@ -14,7 +14,7 @@ def mongo_health():
 
 
 def get_mongo_uri():
-    return f"mongodb://{Mongo.USER}:{Mongo.PWD}@{Mongo.HOST}:27017/{Mongo.DB}?authSource=admin"
+    return f"mongodb://{MongoConfig.USER}:{MongoConfig.PWD}@{MongoConfig.HOST}:27017/{MongoConfig.DB}?authSource=admin"
 
 
 def config_mongo(app: Flask):

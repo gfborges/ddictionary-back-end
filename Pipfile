@@ -35,7 +35,6 @@ flask-cors = "*"
 cloudinary = "*"
 flask-jwt-extended = "*"
 bcrypt = "*"
-coverage = "==4.5.4"
 
 [dev-packages]
 pytest = "*"
@@ -44,7 +43,7 @@ black = "==21.5b2"
 pytest-mongodb = "*"
 flake8 = "*"
 pytest-cov = "*"
-coverage = "==4.5.4"
+coverage = "==5.2.1"
 mypy = "*"
 
 [requires]

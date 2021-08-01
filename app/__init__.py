@@ -1,5 +1,5 @@
 from app.errors import register_error_handlers
-from app.auth import config_jwt
+from app.auth.config import config_jwt
 from flask import Flask, jsonify
 from app.database.mongo import get_db, config_mongo
 from app.database.cloudinarycfg import config_cloudinary

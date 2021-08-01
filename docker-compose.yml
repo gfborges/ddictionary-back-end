@@ -13,8 +13,12 @@ services:
             MONGODB_DB: "ddictDB"
             MONGODB_USER: "${MONGODB_USER}"
             MONGODB_PWD: "${MONGODB_PWD}"
+            JWT_SECRET: "${JWT_SECRET}"
         networks:
             - backend 
+        volumes: 
+            - ./app:/ddict/app:ro
+            - ./wsgi.py/:/ddict/wsgi.py:ro
     mongodb:
         image: mongo:4.0.8
         container_name: mongodb
@@ -28,6 +32,7 @@ services:
             MONDODB_LOG_DIR: /dev/null
         volumes:
             - mongodbdata:/data/db
+            - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
         ports:
             - "27017:27017"
         networks:

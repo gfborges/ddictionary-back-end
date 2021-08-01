@@ -16,5 +16,4 @@ def save(domain: DomainCreation):
 
 def update(domain_slug: str, new_group: str):
     result = domain_reposiotry.update(domain_slug, new_group)
-    print(result)
     return True

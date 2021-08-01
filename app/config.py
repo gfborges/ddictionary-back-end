@@ -1,7 +1,7 @@
 import os
 
 
-class Mongo:
+class MongoConfig:
     HOST = os.getenv("MONGODB_HOST")
     USER = os.getenv("MONGODB_USER")
     PWD = os.getenv("MONGODB_PWD")

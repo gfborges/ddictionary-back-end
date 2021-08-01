@@ -1,0 +1,38 @@
+[
+    {
+        "_id": {"$oid":"60c809cbec2fc163dbda3666"},
+        "title": "cat",
+        "group": "feline",
+        "domain": "pets",
+        "definitions": ["crazy animal", "cute pet"],
+        "translations": ["gato", "catze"],
+        "created_at": {
+            "$date": 0
+            }
+        },
+    {
+        "_id": {"$oid":"af24d828d3622d8660c80a01"},
+        "title": "cockatoo",
+        "group": "bird",
+        "domain": "pets",
+        "definitions": ["weird pet", "smart animal"],
+        "translations": ["cacatua"],
+        "created_at": {
+            "$date": 45059000
+        }
+    },
+    {
+        "_id": {"$oid":"80a16c08752a59e40696660c"},
+        "title": "experience",
+        "group": "entity",
+        "domain": "cx",
+        "definitions": [
+            "event of contact between company and customer",
+            "how the product is presented and delivered to the customer"
+        ],
+        "translations": ["experiencia"],
+        "created_at": {
+            "$date": 45059000
+        }
+    }
+]
