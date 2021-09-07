@@ -23,7 +23,7 @@ def auth(body: LoginInfo):
     ):
         token = create_access_token(
             identity=username,
-            additional_claims={"_id": str(domain.get("_id"))},
+            additional_claims={"_id": str(domain._id)},
         )
         return {"access_token": token}, 200
     raise Forbidden("Wrong username or password")

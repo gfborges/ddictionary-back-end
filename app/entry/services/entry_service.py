@@ -1,23 +1,20 @@
+from flask_jwt_extended.utils import get_current_user
+from werkzeug.exceptions import Forbidden
 from app.entry.entry import Entry
 from app.entry.models import EntryCreation, EntryUpdate
 from app.entry.repositories import entry_repository
 
 
 def get_all(domain: str) -> list[Entry]:
-    ok, entries = entry_repository.get_all(domain)
-    return entries
+    return entry_repository.get_all(domain)
 
 
 def get_one(domain: str, group: str, title: str) -> Entry:
-    ok, entry = entry_repository.get_one(
-        domain=domain, group=group, title=title
-    )
-    return entry
+    return entry_repository.get_one(domain=domain, group=group, title=title)
 
 
 def get(id: str) -> Entry:
-    ok, entry = entry_repository.get(id=id)
-    return entry
+    return entry_repository.get(id=id)
 
 
 def save(entry: EntryCreation) -> Entry:
@@ -25,8 +22,9 @@ def save(entry: EntryCreation) -> Entry:
     return result.inserted_id
 
 
-def delete(domain: str, id: str):
-    return entry_repository.delete(domain=domain, id=id)
+def delete(id: str):
+    domain = get_current_user()
+    return entry_repository.delete(domain=domain.slug, id=id)
 
 
 def update(id: str, entry: EntryUpdate):

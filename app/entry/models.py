@@ -34,7 +34,7 @@ class EntryCreation(EntryQuery):
 
 
 class EntryUpdate(BaseModel):
-    title: Optional[str] = Field()
+    title: Optional[str]
     group: Optional[str] = Field(regex=r"^[A-Za-z\-]+$")
     definitions: Optional[list[str]] = Field(min_length=1)
     translations: Optional[list[str]] = Field(min_length=1)

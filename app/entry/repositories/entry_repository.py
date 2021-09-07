@@ -1,5 +1,7 @@
+from dataclasses import asdict
 from bson.objectid import ObjectId
 from pymongo.results import DeleteResult, InsertOneResult, UpdateResult
+from werkzeug.exceptions import NotFound
 from app.entry.entry import Entry
 from app.entry.models import EntryCreation, EntryUpdate
 from app.database.mongo import get_db
@@ -8,31 +10,33 @@ from app.entry.repositories import image_repository
 mongo = get_db()
 
 
-def get_all(domain: str) -> tuple[bool, list[dict]]:
+def get_all(domain: str) -> list[Entry]:
     cursor = mongo.db.entries.find(filter={"domain": domain})
-    return True, list(cursor)
+    return [Entry(**doc) for doc in cursor]
 
 
-def get_one(domain: str, group: str, title: str) -> tuple[bool, dict]:
-    entry = mongo.db.entries.find_one(
+def get_one(domain: str, group: str, title: str) -> Entry:
+    doc = mongo.db.entries.find_one(
         filter={
             "domain": domain,
             "group": group,
             "title": title,
         }
     )
-    ok = entry is not None
-    return ok, entry
+    if is_ok(doc):
+        return Entry(**doc)
+    raise NotFound("Entry Not Found")
 
 
 def get(id: str) -> tuple[bool, dict]:
-    entry = mongo.db.entries.find_one(
+    doc = mongo.db.entries.find_one(
         filter={
             "_id": ObjectId(id),
         }
     )
-    ok = is_ok(entry)
-    return ok, entry
+    if is_ok(doc):
+        return Entry(**doc)
+    raise NotFound("Entry Not Found")
 
 
 def save(entry: EntryCreation) -> InsertOneResult:
@@ -53,8 +57,16 @@ def delete(domain: str, id: str) -> DeleteResult:
 def update(id: str, entry: EntryUpdate) -> UpdateResult:
     filters = {"_id": ObjectId(id), "domain": entry.domain}
     return mongo.db.entries.update_one(
-        filter=filters, update={"$set": entry.dict()}
+        filter=filters, update={"$set": safe_asdict(entry)}
     )
+
+
+def safe_asdict(obj: dict):
+    dic = obj.dict()
+    keys = [key for key, value in dic.items() if value is None]
+    for key in keys:
+        del dic[key]
+    return dic
 
 
 def is_ok(entry) -> bool:

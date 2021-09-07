@@ -4,7 +4,7 @@ pets = [
         "title": "cat",
         "group": "feline",
         "domain": "pets",
-        "definitions": ["crazy animal"],
+        "definitions": "crazy animal",
         "created_at": "1970-01-01T00:00:00",
     },
     {
@@ -12,7 +12,7 @@ pets = [
         "title": "cockatoo",
         "group": "bird",
         "domain": "pets",
-        "definitions": ["weird pet"],
+        "definitions": "weird pet",
         "created_at": "1970-01-01T12:30:59",
     },
 ]

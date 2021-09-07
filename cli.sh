@@ -1,6 +1,6 @@
 function test() {
     docker-compose -f test-db.yml down
-    docker-compose -f test-db.yml up -d
+    docker-compose --env-file ./.env -f test-db.yml up -d
     pytest $@
     docker-compose -f test-db.yml down
 }

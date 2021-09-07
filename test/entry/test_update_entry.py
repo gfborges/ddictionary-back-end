@@ -41,7 +41,7 @@ def test_dont_update_id(client, jwt):
         json=update_data,
         headers=get_headers(jwt),
     )
-    assert updated.status_code == 201
+    assert updated.status_code == 404
     res = client.get("/entries/" + update_data["_id"])
     assert res.status_code == 404
 
