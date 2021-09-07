@@ -1,15 +1,15 @@
 from app.domain.models import DomainCreation
 from app.domain.models import DomainCreation
-from app.domain.domain import new_domain
+from app.domain.domain import Domain
 import app.domain.repository as domain_reposiotry
 
 
-def find_one(domain_slug: str):
+def find_one(domain_slug: str) -> Domain:
     return domain_reposiotry.find_one(domain_slug)
 
 
-def save(domain: DomainCreation):
-    domain = new_domain(domain)
+def save(domain_dto: DomainCreation) -> str:
+    domain = Domain.create(domain_dto)
     result = domain_reposiotry.save(domain)
     return str(result.inserted_id)
 

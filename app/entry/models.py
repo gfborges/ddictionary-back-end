@@ -5,12 +5,12 @@ from typing import Optional
 
 
 class DomainQuery(BaseModel):
-    domain: Optional[str] = Field(min_length=1)
+    domain: str = Field(min_length=1)
     group: Optional[str] = Field(regex=r"^[A-Za-z\-]+$")
 
 
 class EntryQuery(DomainQuery):
-    title: str = Field(regex=r"^[A-Za-z\-]+$")
+    title: str = Field()
     group: str = Field(regex=r"^[A-Za-z\-]+$")
 
 
@@ -34,7 +34,7 @@ class EntryCreation(EntryQuery):
 
 
 class EntryUpdate(BaseModel):
-    title: Optional[str] = Field(regex=r"^[A-Za-z\-]+$")
+    title: Optional[str] = Field()
     group: Optional[str] = Field(regex=r"^[A-Za-z\-]+$")
     definitions: Optional[list[str]] = Field(min_length=1)
     translations: Optional[list[str]] = Field(min_length=1)

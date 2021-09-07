@@ -1,4 +1,5 @@
 from flask_jwt_extended.utils import decode_token
+from test.auth.utils import get_headers
 
 
 def test_username_required(client):
@@ -42,3 +43,9 @@ def test_login_fails_with_incorrect_password_and_username(client):
     assert (
         res.json.get("message") == "403 Forbidden: Wrong username or password"
     )
+
+
+def test_returns_user(client, jwt):
+    res = client.get("/auth/me", headers=get_headers(jwt))
+    assert res.status_code == 200
+    assert res.json.get("slug") == "pets"

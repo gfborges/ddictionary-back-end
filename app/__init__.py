@@ -7,9 +7,9 @@ from flask_cors import CORS
 
 
 def register_blueprints(app: Flask):
-    from app.entry.router import bp as entry_bp
-    from app.domain.router import bp as domain_bp
-    from app.auth.router import bp as auth_bp
+    from app.entry.entry_router import bp as entry_bp
+    from app.domain.domain_router import bp as domain_bp
+    from app.auth.auth_router import bp as auth_bp
 
     app.register_blueprint(entry_bp)
     app.register_blueprint(domain_bp)

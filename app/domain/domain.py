@@ -1,21 +1,32 @@
 from app.domain.models import DomainCreation
+from bson.objectid import ObjectId
+from dataclasses import asdict, dataclass, field
 import bcrypt
 
 
-def __hash_password(domain: DomainCreation):
-    salt = bcrypt.gensalt()
-    return bcrypt.hashpw(domain.password.encode(), salt).decode()
+@dataclass()
+class Domain:
+    name: str
+    password: str
+    slug: str
+    groups: list[str] = field(default_factory=list)
+    _id: ObjectId = field(default_factory=ObjectId)
 
+    @staticmethod
+    def create(domain_dto: DomainCreation):
+        domain_kwargs = domain_dto.dict() | {
+            "password": Domain.__hash_password(domain_dto),
+        }
+        return Domain(**domain_kwargs)
 
-def new_domain(domain_data: DomainCreation):
-    return domain_data.dict() | {
-        "password": __hash_password(domain_data),
-        "groups": [],
-    }
+    @staticmethod
+    def __hash_password(domain_dto: DomainCreation):
+        salt = bcrypt.gensalt()
+        hashed_pw = bcrypt.hashpw(domain_dto.password.encode(), salt)
+        return hashed_pw.decode()
 
-
-def domain_to_json(domain: dict):
-    json = dict(domain)
-    json["_id"] = str(json.get("_id"))
-    del json["password"]
-    return json
+    def to_json(self):
+        d = asdict(self)
+        del d["password"]
+        d["_id"] = str(self._id)
+        return d

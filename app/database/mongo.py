@@ -14,7 +14,9 @@ def mongo_health():
 
 
 def get_mongo_uri():
-    return f"mongodb://{MongoConfig.USER}:{MongoConfig.PWD}@{MongoConfig.HOST}:27017/{MongoConfig.DB}?authSource=admin"
+    auth = f"{MongoConfig.USER}:{MongoConfig.PWD}"
+    host = f"{MongoConfig.HOST}:{MongoConfig.PORT}"
+    return f"mongodb://{auth}@{host}/{MongoConfig.DB}?authSource=admin"
 
 
 def config_mongo(app: Flask):

@@ -6,6 +6,7 @@ class MongoConfig:
     USER = os.getenv("MONGODB_USER")
     PWD = os.getenv("MONGODB_PWD")
     DB = os.getenv("MONGODB_DB")
+    PORT = "27017"
 
 
 class Cloudinary:

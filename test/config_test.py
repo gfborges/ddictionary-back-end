@@ -6,3 +6,4 @@ from app.config import MongoConfig
 
 class TestMongoConfig(MongoConfig):
     HOST = "localhost"
+    PORT = "27027"
