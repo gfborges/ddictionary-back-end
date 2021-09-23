@@ -1,0 +1,22 @@
+from app.config import ElasticConfig
+from app.awscfg import AWSConfig
+from elasticsearch import Elasticsearch, RequestsHttpConnection
+
+es = None
+
+
+def get_es():
+    return es
+
+
+def config_es(app) -> None:
+    print("not testing")
+    global es
+    awscfg = AWSConfig(ElasticConfig.ES_SERVICE, ElasticConfig.ES_REGION_NAME)
+    es = Elasticsearch(
+        hosts=[{"host": ElasticConfig.ES_HOST, "port": 443}],
+        http_auth=awscfg.auth,
+        use_ssl=True,
+        verify_certs=True,
+        connection_class=RequestsHttpConnection,
+    )

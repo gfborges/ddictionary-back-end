@@ -35,6 +35,10 @@ flask-cors = "*"
 cloudinary = "*"
 flask-jwt-extended = "*"
 bcrypt = "*"
+pytest-elasticsearch = "*"
+boto3 = "*"
+requests-aws4auth = "*"
+elasticsearch = "==7.13.4"
 
 [dev-packages]
 pytest = "*"

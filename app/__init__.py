@@ -1,3 +1,4 @@
+from app.database.escfg import config_es
 from app.errors import register_error_handlers
 from app.auth.config import config_jwt
 from flask import Flask, jsonify
@@ -16,17 +17,22 @@ def register_blueprints(app: Flask):
     app.register_blueprint(auth_bp)
 
 
-def create_app():
-    app = Flask(__name__)
+def config_app(app: Flask):
     CORS(app)
     config_mongo(app)
-    register_blueprints(app)
-    register_error_handlers(app)
     config_cloudinary(app)
     config_jwt(app)
+    config_es(app)
+
+
+def create_app():
+    app = Flask(__name__)
+    config_app(app)
+    register_blueprints(app)
+    register_error_handlers(app)
 
     @app.route("/health")
-    def health():
+    def app_health():
         health = {
             "api": "ok",
             "mongo": get_db().db.command("ping"),

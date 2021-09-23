@@ -17,3 +17,11 @@ class Cloudinary:
 
 class Auth:
     JWT_SECRET = os.getenv("JWT_SECRET")
+
+
+class ElasticConfig:
+    ES_ACCESS_KEY = os.getenv("ES_ACCESS_KEY")
+    ES_SECRET_KEY = os.getenv("ES_SECRET_KEY")
+    ES_REGION_NAME = os.getenv("ES_REGION_NAME")
+    ES_SERVICE = os.getenv("ES_SERVICE")
+    ES_HOST = os.getenv("ES_HOST")

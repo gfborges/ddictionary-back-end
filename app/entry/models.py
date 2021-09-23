@@ -15,8 +15,11 @@ class EntryQuery(DomainQuery):
 
 
 class EntryCreation(EntryQuery):
+    title: str = Field(regex=r"^[A-Za-z\-]+$", min_length=1)
+    group: str = Field(regex=r"^[A-Za-z\-]+$", min_length=1)
+    domain: str = Field(min_length=1)
     definitions: list[str] = Field(min_length=1)
-    translations: Optional[list[str]] = Field(default=[])
+    translations: Optional[list[str]] = Field(default_factory=list)
     created_at: Optional[datetime] = Field(default=None)
     image: Optional[str] = Field(
         regex=r"^data:image/.*;base64,[A-Za-z0-9\+/]+={0,2}$",
