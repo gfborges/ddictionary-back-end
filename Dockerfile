@@ -18,4 +18,8 @@ WORKDIR /ddict
 
 EXPOSE 8000
 
+COPY ./.env ./.env
+
+RUN source .env
+
 CMD [ "pipenv","run","start" ]

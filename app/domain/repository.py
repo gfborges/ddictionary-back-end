@@ -1,8 +1,11 @@
+from app.database.escfg import get_es
 from app.domain.domain import Domain
 from pymongo.results import InsertOneResult
 from app.database.mongo import get_db
-from dataclasses import  asdict
+from dataclasses import asdict
+
 mongo = get_db()
+es = get_es()
 
 
 def find_one(domain_slug: str) -> dict:
@@ -11,7 +14,9 @@ def find_one(domain_slug: str) -> dict:
 
 
 def save(domain: Domain) -> InsertOneResult:
-    return mongo.db.domains.insert_one(asdict(domain))
+    insert_res = mongo.db.domains.insert_one(asdict(domain))
+    es.indices.create(index=domain.slug)
+    return insert_res
 
 
 def update(domain_slug: str, new_group: str):

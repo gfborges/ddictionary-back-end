@@ -1,9 +1,9 @@
 from app.database.escfg import config_es
 from app.errors import register_error_handlers
 from app.auth.config import config_jwt
-from flask import Flask, jsonify
 from app.database.mongo import get_db, config_mongo
 from app.database.cloudinarycfg import config_cloudinary
+from flask import Flask, jsonify
 from flask_cors import CORS
 
 

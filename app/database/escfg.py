@@ -10,7 +10,6 @@ def get_es():
 
 
 def config_es(app) -> None:
-    print("not testing")
     global es
     awscfg = AWSConfig(ElasticConfig.ES_SERVICE, ElasticConfig.ES_REGION_NAME)
     es = Elasticsearch(

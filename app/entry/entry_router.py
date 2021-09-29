@@ -1,3 +1,5 @@
+from flask_jwt_extended.utils import get_current_user
+from app import domain
 from flask import Blueprint, jsonify
 from flask_pydantic import validate
 from werkzeug.exceptions import NotFound
@@ -39,7 +41,8 @@ def get_entry(id: str):
 @jwt_required()
 @validate()
 def create_entry(body: EntryCreation):
-    _id = entry_service.save(entry=body)
+    curr_domain = get_current_user()
+    _id = entry_service.save(domain=curr_domain, entry_dto=body)
     return jsonify({"_id": str(_id)}), 201
 
 

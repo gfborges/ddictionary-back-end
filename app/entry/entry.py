@@ -1,5 +1,4 @@
-from typing import Any
-from app.domain.domain import Domain
+import uuid
 from dataclasses import dataclass, field
 from datetime import datetime
 from bson.objectid import ObjectId
@@ -15,7 +14,7 @@ class Entry:
     image: str = None
     created_at: datetime = field(default_factory=datetime.utcnow)
     updated_at: datetime = field(default=None)
-    _id: ObjectId = field(default_factory=ObjectId)
+    _id: ObjectId = field(default_factory=lambda: str(uuid.uuid4()))
 
     def update_date(self) -> None:
         self.updated_at = datetime.utcnow()

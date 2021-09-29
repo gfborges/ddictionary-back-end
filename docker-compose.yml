@@ -16,7 +16,13 @@ services:
             JWT_SECRET: "${JWT_SECRET}"
             CLOUDINARY_KEY: "${CLOUDINARY_KEY}"
             CLOUDINARY_SECRET: "${CLOUDINARY_SECRET}"
-            CLOUDINARY_NAME: "${CLOUDINARY_NAME}"
+            CLOUDINARY_NAME: "${CLOUDINARY_NAME}"            
+            ES_ACCESS_KEY: "${ES_ACCESS_KEY}"
+            ES_SECRET_KEY: "${ES_SECRET_KEY}"
+            ES_REGION_NAME: "us-east-2"
+            ES_SERVICE: "es"
+            ES_HOST: "${ES_HOST}"
+            
         networks:
             - backend 
         volumes: 

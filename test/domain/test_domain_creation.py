@@ -1,4 +1,4 @@
-def test_domain_creation(client, mongo):
+def test_domain_creation(client, es):
     created = client.post(
         "/domains",
         json={
