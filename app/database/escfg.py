@@ -2,10 +2,9 @@ from app.config import ElasticConfig
 from app.awscfg import AWSConfig
 from elasticsearch import Elasticsearch, RequestsHttpConnection
 
-es = None
-
 
 def get_es():
+    print(es)
     return es
 
 
@@ -19,3 +18,6 @@ def config_es(app) -> None:
         verify_certs=True,
         connection_class=RequestsHttpConnection,
     )
+
+
+es = None

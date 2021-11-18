@@ -63,7 +63,7 @@ def test_dont_update_entry_of_other_domain(client, jwt):
         headers=get_headers(jwt),
         json={"title": "pimba"},
     )
-    assert res.status_code == 404
+    assert res.status_code == 405
     res = client.get("/entries/" + experience_id)
     assert res.status_code == 200
     assert res.json.get("title") == "experience"

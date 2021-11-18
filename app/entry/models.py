@@ -47,3 +47,8 @@ class EntryUpdate(BaseModel):
     def set_domain(cls, v):
         domain_slug = get_jwt_identity()
         return v or domain_slug
+
+
+class EntrySearch(BaseModel):
+    domain: str
+    text: str

@@ -3,29 +3,45 @@ from app.domain.domain import Domain
 from flask_jwt_extended.utils import get_current_user
 from app.entry.repositories import image_repository
 from app.entry.entry import Entry
-from app.entry.models import EntryCreation, EntryUpdate
+from app.entry.models import EntryCreation, EntrySearch, EntryUpdate
 from app.entry.repositories import entry_repository
 
 
-def get_all(domain: str) -> list[Entry]:
-    return entry_repository.get_all(domain)
+def find_many(domain: str) -> list[Entry]:
+    return entry_repository.find_many(domain)
 
 
-def get_one(domain: str, group: str, title: str) -> Entry:
-    return entry_repository.get_one(domain=domain, group=group, title=title)
+def find_one(domain: str, group: str, title: str) -> Entry:
+    return entry_repository.find_one(domain=domain, group=group, title=title)
 
 
-def get(id: str) -> Entry:
-    return entry_repository.get(id=id)
+def find_by_id(domain: Domain, id: str) -> Entry:
+    return entry_repository.find_by_id(domain=domain, id=id)
 
 
 def save(domain: Domain, entry_dto: EntryCreation) -> Entry:
     __validate_entry(domain, entry_dto)
-    image = __save_entry_image(entry_dto)
-    entry_args = entry_dto.dict() | {"image": image}
-    entry = Entry(**entry_args)
+    entry = entry_dto.dict()
+    if entry_dto.image:
+        image = __save_entry_image(entry_dto)
+        entry["image"] = image
+    entry = Entry(**entry)
     result = entry_repository.save(entry)
-    return result.inserted_id
+    return result["_id"]
+
+
+def search(query: EntrySearch):
+    return entry_repository.search(query)
+
+
+def delete(domain: Domain, id: str):
+    deleted = entry_repository.delete(domain=domain.slug, id=id)
+    return deleted.get("result", None)
+
+
+def update(domain: Domain, id: str, entry: EntryUpdate):
+    updated = entry_repository.update(domain, id, entry)
+    return updated.get("result", None)
 
 
 def __validate_entry(domain: Domain, entry_dto: EntryCreation) -> None:
@@ -33,7 +49,7 @@ def __validate_entry(domain: Domain, entry_dto: EntryCreation) -> None:
         raise Forbidden(
             "Invalid domain, you don't have permission to create entry"
         )
-    entry = entry_repository.get_one(
+    entry = entry_repository.find_one(
         domain=entry_dto.domain, group=entry_dto.group, title=entry_dto.title
     )
     if entry:
@@ -43,12 +59,3 @@ def __validate_entry(domain: Domain, entry_dto: EntryCreation) -> None:
 def __save_entry_image(entry_dto: EntryCreation):
     res = image_repository.save(entry_dto)
     return res.get("secure_url")
-
-
-def delete(id: str):
-    domain = get_current_user()
-    return entry_repository.delete(domain=domain.slug, id=id)
-
-
-def update(id: str, entry: EntryUpdate):
-    return entry_repository.update(id, entry)

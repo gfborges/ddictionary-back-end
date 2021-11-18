@@ -22,6 +22,7 @@ services:
             ES_REGION_NAME: "us-east-2"
             ES_SERVICE: "es"
             ES_HOST: "${ES_HOST}"
+            PYTHONUNBUFFERED: "TRUE"
             
         networks:
             - backend 

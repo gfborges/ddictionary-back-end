@@ -10,12 +10,6 @@ class AWSConfig:
             aws_secret_access_key=ElasticConfig.ES_SECRET_KEY,
             region_name=region_name,
         )
-        print(
-            ElasticConfig.ES_SECRET_KEY,
-            ElasticConfig.ES_ACCESS_KEY,
-            service,
-            region_name,
-        )
         creds = self.__client.get_credentials()
         self.__creds = creds
         self.__auth = AWS4Auth(
