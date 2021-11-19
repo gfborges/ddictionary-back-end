@@ -11,9 +11,11 @@ def register_blueprints(app: Flask):
     from app.entry.entry_router import bp as entry_bp
     from app.domain.domain_router import bp as domain_bp
     from app.auth.auth_router import bp as auth_bp
+    from app.group.group_router import bp as group_bp
 
     app.register_blueprint(entry_bp)
     app.register_blueprint(domain_bp)
+    app.register_blueprint(group_bp)
     app.register_blueprint(auth_bp)
 
 

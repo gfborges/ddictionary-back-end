@@ -1,13 +1,15 @@
+import re
 import uuid
+import unicodedata
 from dataclasses import dataclass, field
 from datetime import datetime
-from bson.objectid import ObjectId
 
 
 @dataclass
 class Entry:
     domain: str
     title: str
+    slug: str
     group: str
     definitions: list[str]
     translations: list[str]

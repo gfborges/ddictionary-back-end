@@ -4,7 +4,6 @@ from elasticsearch import Elasticsearch, RequestsHttpConnection
 
 
 def get_es():
-    print(es)
     return es
 
 
