@@ -1,6 +1,4 @@
-import re
 import uuid
-import unicodedata
 from dataclasses import dataclass, field
 from datetime import datetime
 
@@ -9,7 +7,6 @@ from datetime import datetime
 class Entry:
     domain: str
     title: str
-    slug: str
     group: str
     definitions: list[str]
     translations: list[str]

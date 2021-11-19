@@ -31,24 +31,3 @@ class Domain:
         del d["password"]
         d["_id"] = str(self._id)
         return d
-
-
-default_settings = {
-    "analysis": {
-        "analyzer": {
-            "custom_analyzer": {
-                "tokenizer": "standard",
-                "filter": [
-                    "lowercase",
-                    "asciifolding",
-                    "pt_snowball",
-                    "pt_stop",
-                ],
-            },
-        },
-        "filter": {
-            "pt_snowball": {"type": "snowball", "language": "portuguese"},
-            "pt_stop": {"type": "stop", "stopwords": "_brazilian_"},
-        },
-    }
-}

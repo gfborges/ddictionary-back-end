@@ -7,13 +7,19 @@ from app.database.mongo import get_db
 mongo = get_db()
 
 
+def find(domain_slug: str):
+    filter = {"domain": domain_slug}
+    docs = mongo.db.groups.find(filter)
+    return [Group(**doc) for doc in docs]
+
+
 def find_one(domain_slug: str, group_slug: str):
     filter = {"domain": domain_slug, "slug": group_slug}
     doc = mongo.db.groups.find_one(filter)
     return Group(**doc) if doc else None
 
 
-def save(domain: Domain, group: Group):
+def save(group: Group):
     return mongo.db.groups.insert_one(vars(group))
 
 

@@ -10,15 +10,19 @@ def find_one(domain_slug: str, group_slug: str):
     return group_repository.find_one(domain_slug, group_slug)
 
 
+def find(domain_slug: str) -> list[Group]:
+    return group_repository.find(domain_slug)
+
+
 def save(domain: Domain, group_dto: GroupCreation):
-    _validate(group_dto)
+    _validate(domain, group_dto)
     group = Group(domain=domain.slug, **group_dto.dict())
     result = group_repository.save(group)
     return result.inserted_id
 
 
-def _validate(group_dto):
-    if find_one(group_dto.slug):
+def _validate(domain: Domain, group_dto):
+    if find_one(domain.slug, group_dto.slug):
         raise BadRequest("Group already exists")
     return
 

@@ -15,7 +15,7 @@ class EntryQuery(DomainQuery):
 
 
 class EntryCreation(EntryQuery):
-    title: str = Field(regex=r"^[A-Za-z\-]+$", min_length=1)
+    title: str = Field(min_length=1)
     group: str = Field(regex=r"^[A-Za-z\-]+$", min_length=1)
     domain: str = Field(min_length=1)
     definitions: list[str] = Field(min_length=1)
