@@ -12,6 +12,7 @@ class DomainQuery(BaseModel):
 class EntryQuery(DomainQuery):
     title: str = Field()
     group: str = Field(regex=r"^[A-Za-z\-]+$")
+    log: bool = Field(default=False)
 
 
 class EntryCreation(EntryQuery):
@@ -52,3 +53,4 @@ class EntryUpdate(BaseModel):
 class EntrySearch(BaseModel):
     domain: str
     text: str
+    log: bool = False

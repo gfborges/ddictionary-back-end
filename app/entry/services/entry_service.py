@@ -1,9 +1,14 @@
 from werkzeug.exceptions import BadRequest, Forbidden
 from app.domain.domain import Domain
-from flask_jwt_extended.utils import get_current_user
+from app.logs import service as log_service
 from app.entry.repositories import image_repository
 from app.entry.entry import Entry
-from app.entry.models import EntryCreation, EntrySearch, EntryUpdate
+from app.entry.models import (
+    EntryCreation,
+    EntryQuery,
+    EntrySearch,
+    EntryUpdate,
+)
 from app.entry.repositories import entry_repository
 
 
@@ -11,8 +16,15 @@ def find_many(domain: str) -> list[Entry]:
     return entry_repository.find_many(domain)
 
 
-def find_one(domain: str, group: str, title: str) -> Entry:
-    return entry_repository.find_one(domain=domain, group=group, title=title)
+def find_one(query: EntryQuery) -> Entry:
+    entry = entry_repository.find_one(
+        domain=query.domain,
+        group=query.group,
+        title=query.title,
+    )
+    if entry and query.log:
+        log_service.log(query.domain, "entry_view", query.title)
+    return entry
 
 
 def find_by_id(domain: Domain, id: str) -> Entry:
@@ -31,6 +43,8 @@ def save(domain: Domain, entry_dto: EntryCreation) -> Entry:
 
 
 def search(query: EntrySearch):
+    if query.log:
+        log_service.log(query.domain, "search", query.text)
     return entry_repository.search(query)
 
 

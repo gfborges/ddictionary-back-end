@@ -52,7 +52,7 @@ def search(query: EntrySearch) -> list[Entry]:
         body={
             "query": {
                 "simple_query_string": {
-                    "analyzer": "custom_analyzer",
+                    # "analyzer": "custom_analyzer",
                     "query": query.text,
                 },
             },
@@ -63,10 +63,10 @@ def search(query: EntrySearch) -> list[Entry]:
 
 
 def save(entry: Entry) -> InsertOneResult:
-    return es.create(
+    return es.index(
         index=entry.domain,
         id=entry.id,
-        body=asdict(entry, dict_factory=dict_factory),
+        body=to_dict(entry),
         doc_type="entry",
     )
 
@@ -98,5 +98,5 @@ def ok(entry) -> bool:
     return entry is not None
 
 
-def dict_factory(value_pairs: list):
-    return dict([(k, v) for (k, v) in value_pairs if v is not None])
+def to_dict(obj):
+    return {k: v for k, v in vars(obj).items() if v is not None}

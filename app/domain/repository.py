@@ -1,5 +1,6 @@
 from app.database.escfg import get_es
-from app.domain.domain import Domain, default_settings
+from app.domain.domain import Domain
+from app.domain.index_settings import settings, mappings
 from pymongo.results import InsertOneResult
 from app.database.mongo import get_db
 from dataclasses import asdict
@@ -18,7 +19,8 @@ def save(domain: Domain) -> InsertOneResult:
         index=domain.slug,
         ignore=400,
         body={
-            "settings": default_settings,
+            "settings": settings,
+            "mappings": mappings,
         },
     )
     return mongo.db.domains.insert_one(asdict(domain))

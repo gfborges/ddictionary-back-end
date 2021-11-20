@@ -3,22 +3,20 @@ from dataclasses import dataclass, field
 from datetime import datetime
 
 
-@dataclass
 class Entry:
-    domain: str
-    title: str
-    group: str
-    definitions: list[str]
-    translations: list[str]
-    image: str = None
-    created_at: str = field(
-        default_factory=lambda: datetime.utcnow().isoformat(),
-    )
-    updated_at: datetime = field(default=None)
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
-    _type: str = None
-    _index: str = None
-    _id: str = None
+    def __init__(self, **kwargs) -> None:
+        self.domain = kwargs.get("domain")
+        self.title = kwargs.get("title")
+        self.group = kwargs.get("group")
+        self.definitions = kwargs.get("definitions")
+        self.translations = kwargs.get("translations")
+        self.image = kwargs.get("image")
+        self.created_at = kwargs.get(
+            "created_at",
+            datetime.utcnow().isoformat(),
+        )
+        self.id = kwargs.get("id", uuid.uuid4())
+        self._id = kwargs.get("_id")
 
     def __post_init__(self):
         if self._id:

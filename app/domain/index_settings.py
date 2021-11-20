@@ -1,7 +1,7 @@
 settings = {
     "analysis": {
         "analyzer": {
-            "custom_analyzer": {
+            "default": {
                 "tokenizer": "standard",
                 "filter": [
                     "lowercase",
@@ -20,11 +20,32 @@ settings = {
 
 mappings = {
     "properties": {
+        "id": {
+            "type": "text",
+            "fields": {"keyword": {"type": "keyword", "ignore_above": 256}},
+        },
+        "title": {
+            "type": "text",
+            "fields": {"keyword": {"type": "keyword", "ignore_above": 256}},
+        },
+        "domain": {
+            "type": "text",
+            "fields": {"keyword": {"type": "keyword", "ignore_above": 256}},
+        },
+        "group": {
+            "type": "text",
+            "fields": {"keyword": {"type": "keyword", "ignore_above": 256}},
+        },
         "definitions": {
-            "title": {"type": "text", "analyzer": "custom_analyzer"},
-            "group": {"type": "text", "analyzer": "custom_analyzer"},
-            "definitions": {"type": "text", "analyzer": "custom_analyzer"},
-            "translations": {"type": "text", "analyzer": "custom_analyzer"},
-        }
+            "type": "text",
+            "fields": {"keyword": {"type": "keyword", "ignore_above": 256}},
+        },
+        "translations": {
+            "type": "text",
+            "fields": {"keyword": {"type": "keyword", "ignore_above": 256}},
+        },
+        "created_at": {
+            "type": "date",
+        },
     }
 }

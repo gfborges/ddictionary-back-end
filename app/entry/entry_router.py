@@ -26,7 +26,7 @@ def list_all(query: DomainQuery):
 @bp.get("/one")
 @validate()
 def get_one(query: EntryQuery):
-    if entry := entry_service.find_one(**query.dict()):
+    if entry := entry_service.find_one(query):
         return jsonify(entry.to_json())
     raise NotFound("Entry Not Found")
 
