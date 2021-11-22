@@ -50,16 +50,20 @@ def search(query: EntrySearch) -> list[Entry]:
         index=query.domain,
         doc_type="entry",
         body={
+            "from": query.skip,
+            "size": query.size,
             "query": {
                 "simple_query_string": {
-                    # "analyzer": "custom_analyzer",
                     "query": query.text,
                 },
             },
         },
     )
     docs = r["hits"]["hits"]
-    return [Entry(**doc["_source"]) for doc in docs]
+    return {
+        "total": r["hits"]["total"]["value"],
+        "data": [Entry(**doc["_source"]) for doc in docs],
+    }
 
 
 def save(entry: Entry) -> InsertOneResult:

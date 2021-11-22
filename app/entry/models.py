@@ -53,4 +53,6 @@ class EntryUpdate(BaseModel):
 class EntrySearch(BaseModel):
     domain: str
     text: str
+    skip: int = 0
+    size: int = 10
     log: bool = False

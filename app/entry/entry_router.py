@@ -35,7 +35,9 @@ def get_one(query: EntryQuery):
 @validate()
 def search(query: EntrySearch):
     entries = entry_service.search(query)
-    return jsonify([entry.to_json(resumed=True) for entry in entries])
+    data = [entry.to_json(resumed=True) for entry in entries["data"]]
+    entries["data"] = data
+    return jsonify(entries), 200
 
 
 @bp.get("/<string:id>")
