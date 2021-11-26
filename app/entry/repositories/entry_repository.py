@@ -1,3 +1,4 @@
+from werkzeug.exceptions import NotFound
 from app.domain.domain import Domain
 from dataclasses import asdict
 from pymongo.results import DeleteResult, InsertOneResult, UpdateResult
@@ -12,7 +13,7 @@ es = get_es()
 
 def find_many(domain: str) -> list[Entry]:
     docs = es.search(
-        index=domain, doc_type="entry", body={"query": {"match_all": {}}}
+        index=domain, doc_type="_doc", body={"query": {"match_all": {}}}
     )
     return [Entry(**doc["_source"]) for doc in docs["hits"]["hits"]]
 
@@ -20,7 +21,7 @@ def find_many(domain: str) -> list[Entry]:
 def find_one(domain: str, group: str, title: str) -> Entry:
     r = es.search(
         index=domain,
-        doc_type="entry",
+        doc_type="_doc",
         body={
             "query": {
                 "bool": {
@@ -39,7 +40,7 @@ def find_one(domain: str, group: str, title: str) -> Entry:
 
 
 def find_by_id(domain: Domain, id: str) -> Entry:
-    doc = es.get(index=domain.slug, doc_type="entry", id=id)
+    doc = es.get(index=domain.slug, doc_type="_doc", id=id)
     if not ok(doc.get("_source")):
         return None
     return Entry(**doc["_source"])
@@ -48,7 +49,7 @@ def find_by_id(domain: Domain, id: str) -> Entry:
 def search(query: EntrySearch) -> list[Entry]:
     r = es.search(
         index=query.domain,
-        doc_type="entry",
+        doc_type="_doc",
         body={
             "from": query.skip,
             "size": query.size,
@@ -67,22 +68,23 @@ def search(query: EntrySearch) -> list[Entry]:
 
 
 def save(entry: Entry) -> InsertOneResult:
-    return es.index(
+    print(to_dict(entry))
+    return es.create(
         index=entry.domain,
         id=entry.id,
         body=to_dict(entry),
-        doc_type="entry",
+        doc_type="_doc",
     )
 
 
 def delete(domain: str, id: str) -> DeleteResult:
-    return es.delete(index=domain, doc_type="entry", id=id, ignore=[404])
+    return es.delete(index=domain, doc_type="_doc", id=id, ignore=[404])
 
 
 def update(domain: Domain, id: str, entry: EntryUpdate) -> UpdateResult:
     return es.update(
         index=domain.slug,
-        doc_type="entry",
+        doc_type="_doc",
         id=id,
         body={
             "doc": safe_asdict(entry),

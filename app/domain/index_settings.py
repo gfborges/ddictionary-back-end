@@ -47,5 +47,9 @@ mappings = {
         "created_at": {
             "type": "date",
         },
+        "image": {
+            "type": "text",
+            "fields": {"keyword": {"type": "keyword", "ignore_above": 256}},
+        },
     }
 }

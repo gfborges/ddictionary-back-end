@@ -39,6 +39,7 @@ def save(domain: Domain, entry_dto: EntryCreation) -> Entry:
         entry["image"] = image
     entry = Entry(**entry)
     result = entry_repository.save(entry)
+    print("print", result)
     return result["_id"]
 
 

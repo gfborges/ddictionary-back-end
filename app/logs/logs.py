@@ -7,7 +7,10 @@ class Logger:
             self.__setattr__(k, v)
 
     def to_json(self):
-        return vars(self) | {"_id": str(self._id)}
+        d = vars(self)
+        if hasattr(self, "_id"):
+            return d | {"_id": str(self._id)}
+        return d
 
     def log(self, msg: dict):
         if msg not in self.msgs:
